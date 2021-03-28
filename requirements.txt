@@ -1,0 +1,3 @@
+aiogram==2.12.1
+gcsa==1.2.0
+SQLAlchemy==1.4.3
