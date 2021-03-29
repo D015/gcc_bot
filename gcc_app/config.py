@@ -1,7 +1,5 @@
 from os import environ
 
-
-
 import settings
 
 
