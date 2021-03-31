@@ -1,3 +1,3 @@
-from .user import User, session, create_all
+from .user import User
 
 
