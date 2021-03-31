@@ -1,6 +1,6 @@
 from os import environ
 
-import settings
+from gcc_app import settings
 
 
 class Config:
@@ -12,9 +12,9 @@ class Config:
     DB_NAME = environ.get('DB_NAME', settings.db_name)
 
     SQLALCHEMY_DATABASE_URI = (
-        f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
+        f'postgresql+psycopg2://'
+        f'{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}')
 
-    engine = create_engine('sqlite:///../../db/gcc.db', echo=True)
-    base = declarative_base()
+    TOKEN_BOT = settings.token_bot
 
 
