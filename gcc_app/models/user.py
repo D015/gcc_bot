@@ -1,19 +1,25 @@
 from sqlalchemy import (Column,
+                        Boolean,
                         String,
                         Integer)
 
 from gcc_app.app import DB
+from gcc_app.models.base import BaseModel
 
 
-class User(DB):
+class UserModel(BaseModel, DB):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
-    telegram_chat_id = Column(Integer)
-    name = Column(String)
-    # fullname = Column(String)
-    # nickname = Column(String)
+    chat_id = Column(Integer, index=True, unique=True)
 
-    # def __repr__(self):
-    #     return "<User(name='%s', fullname='%s', nickname='%s')>" % (
-    #         self.name, self.fullname, self.nickname)
+    is_bot = Column(Boolean)
+
+    first_name = Column(String)
+    last_name = Column(String)
+    username = Column(String)
+
+    language_code = Column(String)
+
+    def __repr__(self):
+        return f'User id {self.id} {self.username} chat_id {self.chat_id}'
