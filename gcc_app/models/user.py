@@ -1,25 +1,27 @@
 from sqlalchemy import (Column,
                         Boolean,
                         String,
-                        Integer)
+                        Integer,
+                        ForeignKey)
 
-from gcc_app.app import DB
 from gcc_app.models.base import BaseModel
 
 
-class UserModel(BaseModel, DB):
+class UserModel(BaseModel):
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, ForeignKey('base.id'), primary_key=True)
+
     chat_id = Column(Integer, index=True, unique=True)
-
     is_bot = Column(Boolean)
+    first_name = Column(String(50))
+    last_name = Column(String(50))
+    username = Column(String(50))
+    language_code = Column(String(6))
 
-    first_name = Column(String)
-    last_name = Column(String)
-    username = Column(String)
-
-    language_code = Column(String)
+    __mapper_args__ = {
+        'polymorphic_identity': 'users'
+    }
 
     def __repr__(self):
         return f'User id {self.id} {self.username} chat_id {self.chat_id}'

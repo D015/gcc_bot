@@ -1,6 +1,6 @@
 from aiogram import types
 
-from gcc_app.app import session, bot, dp
+from gcc_app.app import session, dp
 from gcc_app.models import UserModel
 
 
