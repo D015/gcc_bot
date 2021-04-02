@@ -17,7 +17,7 @@ class BaseAccess:
     _obj: Union[User, None] = None
     __model: Optional[DeclarativeMeta] = BaseModel
 
-    def remove_object(self):
+    def remove(self):
         if self._obj:
             _obj_id = self._obj.id
             session.delete(self._obj)
@@ -25,7 +25,7 @@ class BaseAccess:
             return _obj_id
         return None
 
-    def query_object_by_id(self):
+    def query_by_id(self):
         obj = session.query(self.__model).get(self.id)
         return obj
 

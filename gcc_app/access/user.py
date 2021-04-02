@@ -18,7 +18,7 @@ class UserAccess(BaseAccess):
     language_code: Optional[str] = None
     __model: Optional[DeclarativeMeta] = User
 
-    def create_user(self) -> int:
+    def create(self) -> int:
         new_user = User(chat_id=self.chat_id,
                         is_bot=self.is_bot,
                         first_name=self.first_name,
@@ -29,14 +29,14 @@ class UserAccess(BaseAccess):
         session.commit()
         return new_user.id
 
-    def create_user_for_start(self) -> int:
+    def create_for_start(self) -> int:
         user = self.query_by_chat_id()
         if user:
             user_id = user.id
             if user.archived:
                 user.archived = False
         else:
-            user_id = self.create_user()
+            user_id = self.create()
         return user_id
 
     def query_by_chat_id(self) -> DeclarativeMeta:

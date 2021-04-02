@@ -14,7 +14,7 @@ async def process_start_command(message: types.Message):
                          last_name=message.from_user.last_name,
                          username=message.from_user.username,
                          language_code=message.from_user.language_code). \
-        create_user_for_start()
+        create_for_start()
 
     print(user_id)
 

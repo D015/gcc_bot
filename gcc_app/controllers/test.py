@@ -6,7 +6,7 @@ from gcc_app.app import session, dp
 
 @dp.message_handler(commands=['test'])
 async def process_test_command(message: types.Message):
-    print(message)
-    UserAccess(chat_id=message.from_user.id).create_user()
+    print(type(message.from_user.id))
+    print(type(message.from_user.is_bot))
 
     await message.reply("Привет!\nНапиши мне что-нибудь!")
