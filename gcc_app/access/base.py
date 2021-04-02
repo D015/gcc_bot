@@ -17,30 +17,30 @@ class BaseAccess:
     _obj: Union[User, None] = None
     __model: Optional[DeclarativeMeta] = BaseModel
 
-    def remove(self):
+    async def remove(self):
         if self._obj:
             _obj_id = self._obj.id
             session.delete(self._obj)
             session.commit()
             return _obj_id
-        return None
+        await None
 
-    def query_by_id(self):
+    async def query_by_id(self):
         obj = session.query(self.__model).get(self.id)
-        return obj
+        await obj
 
-    def activate(self):
+    async def activate(self):
         self._obj.active = True
-        return True
+        await True
 
-    def deactivate(self):
+    async def deactivate(self):
         self._obj.active = False
-        return False
+        await False
 
-    def archive(self):
+    async def archive(self):
         self._obj.archived = True
         return True
 
-    def unarchive(self):
+    async def unarchive(self):
         self._obj.archived = False
-        return False
+        await False
