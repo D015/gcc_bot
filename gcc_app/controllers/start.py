@@ -1,8 +1,7 @@
 from aiogram import types
 
 from gcc_app.access.user import UserAccess
-from gcc_app.app import session, dp
-from gcc_app.models import User
+from gcc_app.app import dp
 
 
 @dp.message_handler(commands=['start'])

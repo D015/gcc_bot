@@ -10,22 +10,12 @@ from gcc_app.models.base import BaseModel
 
 @dataclass
 class BaseAccess:
-
-    # def __init__(self, id=None, timestamp=None, active=None, archived=None,
-    #              _obj=None, model=None):
-    #     self.id = id
-    #     self.timestamp = timestamp
-    #     self.active = active
-    #     self.archived = archived
-    #     self._obj = _obj
-    #     self.model = model
-    id: Optional[int]
-    timestamp: Optional[str]
-    active: Optional[bool]
-    archived: Optional[bool]
-    _obj: Union[User, None]
-    # todo check the use of the attribute model
-    # model: Optional[User]
+    id: Optional[int] = None
+    timestamp: Optional[str] = None
+    active: Optional[bool] = None
+    archived: Optional[bool] = None
+    _obj: Union[User, None] = None
+    __model: Optional[DeclarativeMeta] = BaseModel
 
     def remove_object(self):
         if self._obj:
@@ -36,7 +26,7 @@ class BaseAccess:
         return None
 
     def query_object_by_id(self):
-        obj = self.model.query.get(self.id)
+        obj = session.query(self.__model).get(self.id)
         return obj
 
     def activate(self):
