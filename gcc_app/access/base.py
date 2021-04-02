@@ -3,8 +3,12 @@ from gcc_app.app import session
 
 class BaseAccess:
 
-    def __init__(self, id=None, _obj=None, model=None):
+    def __init__(self, id=None, timestamp=None, active=None, archived=None,
+                 _obj=None, model=None):
         self.id = id
+        self.timestamp = timestamp
+        self.active = active
+        self.archived = archived
         self._obj = _obj
         self.model = model
 
