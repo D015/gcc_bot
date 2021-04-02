@@ -9,6 +9,7 @@ class UserAccess(BaseAccess):
                  first_name=None, last_name=None, username=None,
                  language_code=None):
         super().__init__(id, timestamp, active, archived, _obj)
+        # todo check the use of the attribute model
         # todo add check is_bot for boolean type
         self.chat_id = int(chat_id)
         self.is_bot = False if is_bot == 'false' else True
