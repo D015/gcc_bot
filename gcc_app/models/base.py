@@ -10,7 +10,7 @@ from gcc_app.app import DB
 
 
 class BaseModel(DB):
-    __tablename__ = 'base'
+    __tablename__ = 'base_model'
 
     id = Column(Integer, primary_key=True)
 
@@ -21,6 +21,6 @@ class BaseModel(DB):
     type = Column(String(50))
 
     __mapper_args__ = {
-        'polymorphic_identity': 'base',
+        'polymorphic_identity': 'base_model',
         'polymorphic_on': type
     }
