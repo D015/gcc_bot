@@ -1,10 +1,9 @@
 from sqlalchemy import (Column,
-                        Boolean,
                         DateTime,
                         String,
                         Integer,
                         ForeignKey)
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 from gcc_app.models.base import BaseModel
 
@@ -24,7 +23,9 @@ class Event(BaseModel):
     location = Column(String(1024))
 
     user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship('User', foreign_keys=[user_id])
+    # todo select the type of cascade deletion ?
+    user = relationship('User', foreign_keys=[user_id], cascade='all, delete',
+                        backref=backref('events', lazy='dynamic'))
 
     __mapper_args__ = {
         'polymorphic_identity': 'event'

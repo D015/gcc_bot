@@ -16,11 +16,11 @@ async def process_test_command(message: types.Message):
     # session.commit()
     # print(type(message.from_user.id))
     # print(type(message.from_user.is_bot))
-    user = session.query(User).filter_by(chat_id=123).first()
+    user = session.query(User).filter_by(chat_id=321).first()
     print('--------------------')
     print(user)
     print('--------------------')
-    print(user.events)
+    print(user.events.all())
     print('--------------------')
     print('--------------------')
 
