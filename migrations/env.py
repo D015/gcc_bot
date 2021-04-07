@@ -9,9 +9,9 @@ from gcc_app.config import SQLALCHEMY_DATABASE_URI
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
-from gcc_app.models import User
+from gcc_app.models import UserModel
 from gcc_app.models.base import BaseModel
-from gcc_app.models.event import Event
+from gcc_app.models.event import EventModel
 
 config = context.config
 

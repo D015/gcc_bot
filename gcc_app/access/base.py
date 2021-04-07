@@ -5,7 +5,7 @@ from typing import Optional, Union
 from sqlalchemy.orm import DeclarativeMeta
 
 from gcc_app.app import session
-from gcc_app.models import User
+from gcc_app.models import UserModel
 from gcc_app.models.base import BaseModel
 
 
@@ -16,7 +16,7 @@ class BaseAccess:
     timestamp: Optional[str] = None
     active: Optional[bool] = None
     archived: Optional[bool] = None
-    _obj: Union[User, None] = None
+    _obj: Union[UserModel, None] = None
     __model: Optional[DeclarativeMeta] = BaseModel
 
     def remove(self):

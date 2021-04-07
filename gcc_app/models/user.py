@@ -7,7 +7,7 @@ from sqlalchemy import (Column,
 from gcc_app.models.base import BaseModel
 
 
-class User(BaseModel):
+class UserModel(BaseModel):
     __tablename__ = 'user'
 
     id = Column(Integer, ForeignKey('base_model.id'), primary_key=True)
