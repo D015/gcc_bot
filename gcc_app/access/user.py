@@ -33,13 +33,14 @@ class UserAccess(BaseAccess):
         user = self.query_by_telegram_user_id()
         if user:
             user_id = user.id
-            if user.archived:
-                user.archived = False
+            if not user.active:
+                user.active = True
+                session.commit()
         else:
             user_id = self.create()
         return user_id
 
-    def query_by_telegram_user_id(self) -> DeclarativeMeta:
+    def query_by_telegram_user_id(self) -> User:
         user = session.query(User).filter_by(
             telegram_user_id=self.telegram_user_id).first()
         return user

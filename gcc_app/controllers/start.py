@@ -8,7 +8,7 @@ from gcc_app.app import dp
 async def process_start_command(message: types.Message):
     print(message)
 
-    user_id = UserAccess(chat_id=message.from_user.id,
+    user_id = UserAccess(telegram_user_id=message.from_user.id,
                          is_bot=message.from_user.is_bot,
                          first_name=message.from_user.first_name,
                          last_name=message.from_user.last_name,
