@@ -13,10 +13,11 @@ class Event(BaseModel):
 
     id = Column(Integer, ForeignKey('base_model.id'), primary_key=True)
 
-    event_id = Column(String(1024), index=True, unique=True)
+    google_calendar_event_id = Column(String(1024), index=True, unique=True)
     summary = Column(String(56))
     start = Column(DateTime)
     end = Column(DateTime)
+    # todo type(utc_time_offset) ?
     utc_time_offset = Column(String(6))
     timezone = Column(String(50))
     description = Column(String(1024))
@@ -32,6 +33,6 @@ class Event(BaseModel):
     }
 
     def __repr__(self):
-        return f'Event id {self.id} {self.summary} event_id {self.event_id}'
+        return f'Event id {self.id} {self.summary} event_id {self.google_calendar_event_id}'
 
 

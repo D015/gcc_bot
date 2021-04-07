@@ -12,7 +12,7 @@ class User(BaseModel):
 
     id = Column(Integer, ForeignKey('base_model.id'), primary_key=True)
 
-    chat_id = Column(Integer, index=True, unique=True)
+    telegram_user_id = Column(Integer, index=True, unique=True)
     is_bot = Column(Boolean)
     first_name = Column(String(50))
     last_name = Column(String(50))
@@ -24,4 +24,5 @@ class User(BaseModel):
     }
 
     def __repr__(self):
-        return f'User id {self.id} {self.username} chat_id {self.chat_id}'
+        return f'User id {self.id} {self.username} ' \
+               f'telegram_user_id {self.telegram_user_id}'

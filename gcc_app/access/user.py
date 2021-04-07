@@ -10,7 +10,7 @@ from gcc_app.models import User
 
 @dataclass
 class UserAccess(BaseAccess):
-    chat_id: Optional[int] = None
+    telegram_user_id: Optional[int] = None
     is_bot: Optional[bool] = None
     first_name: Optional[str] = None
     last_name: Optional[str] = None
@@ -19,7 +19,7 @@ class UserAccess(BaseAccess):
     __model: Optional[DeclarativeMeta] = User
 
     def create(self) -> int:
-        new_user = User(chat_id=self.chat_id,
+        new_user = User(telegram_user_id=self.telegram_user_id,
                         is_bot=self.is_bot,
                         first_name=self.first_name,
                         last_name=self.last_name,
@@ -30,7 +30,7 @@ class UserAccess(BaseAccess):
         return new_user.id
 
     def create_for_start(self) -> int:
-        user = self.query_by_chat_id()
+        user = self.query_by_telegram_user_id()
         if user:
             user_id = user.id
             if user.archived:
@@ -39,6 +39,7 @@ class UserAccess(BaseAccess):
             user_id = self.create()
         return user_id
 
-    def query_by_chat_id(self) -> DeclarativeMeta:
-        user = session.query(User).filter_by(chat_id=self.chat_id).first()
+    def query_by_telegram_user_id(self) -> DeclarativeMeta:
+        user = session.query(User).filter_by(
+            telegram_user_id=self.telegram_user_id).first()
         return user
