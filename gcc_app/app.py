@@ -8,6 +8,9 @@ from aiogram.dispatcher import Dispatcher
 
 from gcc_app.config import SQLALCHEMY_DATABASE_URI, TOKEN_BOT
 
+from gcsa.google_calendar import GoogleCalendar
+
+
 engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=True)
 DB = declarative_base()
 Session = sessionmaker(bind=engine)
@@ -16,3 +19,5 @@ session = Session()
 
 bot = Bot(token=TOKEN_BOT)
 dp = Dispatcher(bot)
+
+calendar = GoogleCalendar('juniors.py.code.review@gmail.com')

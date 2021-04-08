@@ -1,12 +1,13 @@
 # import datetime
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, date
 from typing import Optional
 
 from sqlalchemy.orm import DeclarativeMeta
 
 from gcc_app.access.base import BaseAccess
 from gcc_app.app import session
+from gcc_app.constants import default_start, default_summary
 from gcc_app.models.event import EventModel
 
 
@@ -14,9 +15,9 @@ from gcc_app.models.event import EventModel
 class EventAccess(BaseAccess):
     google_calendar_event_id: Optional[str] = None
     summary: Optional[str] = None
-    # todo type(start end) ?
-    start: Optional[str] = None
-    end: Optional[str] = None
+    # todo type(start end) - date ?
+    start: Optional[datetime, date] = None
+    end: Optional[datetime, date] = None
     # todo type(utc_time_offset) ?
     utc_time_offset: Optional[str] = None
     timezone: Optional[str] = None
@@ -26,6 +27,11 @@ class EventAccess(BaseAccess):
     __model: Optional[DeclarativeMeta] = EventModel
 
     def create(self) -> int:
+        self.summary = self.summary if self.summary else default_summary
+
+        if type(self.start) is not datetime and type(self.start) is not date:
+            self.start = default_start
+
         new_event = \
             EventModel(google_calendar_event_id=self.google_calendar_event_id,
                        summary=self.summary,

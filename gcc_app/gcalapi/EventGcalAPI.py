@@ -1,39 +1,44 @@
 from dataclasses import dataclass
+from datetime import datetime, date
 from typing import Optional
 
-from datetime import datetime
-
 from gcsa.event import Event
-from gcsa.google_calendar import GoogleCalendar
+from googleapiclient.errors import HttpError
+
+from gcc_app.app import calendar
+from gcc_app.constants import default_summary, default_start
 
 
 @dataclass
 class EventGcalAPI:
     event_id: Optional[str] = None
     summary: Optional[str] = None
-    # todo type(start end) ?
-    start: Optional[str] = None
-    end: Optional[str] = None
+    # todo type(start end) - date ?
+    start: Optional[datetime, date] = None
+    end: Optional[datetime, date] = None
     timezone: Optional[str] = None
     description: Optional[str] = None
     location: Optional[str] = None
-    user_id: Optional[int] = None
 
-    def create(self) -> int:
-        new_event = \
-            Event(google_calendar_event_id=self.google_calendar_event_id,
-                  summary=self.summary,
-                  start=self.start,
-                  end=self.end,
-                  timezone=self.timezone,
-                  description=self.description,
-                  location=self.location,
-                  user_id=self.user_id)
-        session.add(new_event)
-        session.commit()
-        return new_event.id
+    def create(self) -> Optional[Event]:
+        self.summary = self.summary if self.summary else default_summary
 
-    def query_by_google_calendar_event_id(self) -> DeclarativeMeta:
-        event = session.query(Event).filter_by(
-            google_calendar_event_id=self.google_calendar_event_id).first()
+        if type(self.start) is not datetime and type(self.start) is not date:
+            self.start = default_start
+
+        new_event = Event(event_id=self.event_id,
+                          summary=self.summary,
+                          start=self.start,
+                          end=self.end,
+                          timezone=self.timezone,
+                          description=self.description,
+                          location=self.location)
+        calendar.add_event(new_event)
+        return self.query_by_google_calendar_event_id()
+
+    def query_by_google_calendar_event_id(self) -> Optional[Event]:
+        try:
+            event = calendar.get_event(self.event_id)
+        except HttpError:
+            event = None
         return event

@@ -6,6 +6,7 @@ from sqlalchemy import (Column,
 from sqlalchemy.orm import relationship, backref
 
 from gcc_app.models.base import BaseModel
+from gcc_app.utils import create_uuid4, create_default_start
 
 
 class EventModel(BaseModel):
@@ -13,9 +14,12 @@ class EventModel(BaseModel):
 
     id = Column(Integer, ForeignKey('base_model.id'), primary_key=True)
 
-    google_calendar_event_id = Column(String(1024), index=True, unique=True)
+    google_calendar_event_id = Column(String(1024), index=True, unique=True,
+                                      default=create_uuid4)
     summary = Column(String(56))
-    start = Column(DateTime)
+    # todo decide whether to make a default
+    #  in the model (start=create_default_start)  or not
+    start = Column(DateTime, default=create_default_start)
     end = Column(DateTime)
     # todo type(utc_time_offset) ?
     utc_time_offset = Column(String(6))
