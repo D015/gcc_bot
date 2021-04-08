@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime, date
-from typing import Optional
+from typing import Optional, Union
 
 from gcsa.event import Event
 from googleapiclient.errors import HttpError
@@ -14,8 +14,8 @@ class EventGcalAPI:
     event_id: Optional[str] = None
     summary: Optional[str] = None
     # todo type(start end) - date ?
-    start: Optional[datetime, date] = None
-    end: Optional[datetime, date] = None
+    start: Union[datetime, date, None] = None
+    end: Union[datetime, date, None] = None
     timezone: Optional[str] = None
     description: Optional[str] = None
     location: Optional[str] = None

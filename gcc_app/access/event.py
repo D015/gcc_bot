@@ -1,7 +1,7 @@
 # import datetime
 from dataclasses import dataclass
 from datetime import datetime, date
-from typing import Optional
+from typing import Optional, Union
 
 from sqlalchemy.orm import DeclarativeMeta
 
@@ -16,8 +16,8 @@ class EventAccess(BaseAccess):
     google_calendar_event_id: Optional[str] = None
     summary: Optional[str] = None
     # todo type(start end) - date ?
-    start: Optional[datetime, date] = None
-    end: Optional[datetime, date] = None
+    start: Union[datetime, date, None] = None
+    end: Union[datetime, date, None] = None
     # todo type(utc_time_offset) ?
     utc_time_offset: Optional[str] = None
     timezone: Optional[str] = None
