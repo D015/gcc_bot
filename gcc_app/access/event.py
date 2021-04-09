@@ -7,8 +7,9 @@ from sqlalchemy.orm import DeclarativeMeta
 
 from gcc_app.access.base import BaseAccess
 from gcc_app.app import session
-from gcc_app.constants import default_start, default_summary
+from gcc_app.constants import default_summary
 from gcc_app.models.event import EventModel
+from gcc_app.utils import create_default_start
 
 
 @dataclass
@@ -26,11 +27,11 @@ class EventAccess(BaseAccess):
     user_id: Optional[int] = None
     __model: Optional[DeclarativeMeta] = EventModel
 
-    def create(self) -> int:
+    def create(self) -> EventModel:
         self.summary = self.summary if self.summary else default_summary
 
         if type(self.start) is not datetime and type(self.start) is not date:
-            self.start = default_start
+            self.start = create_default_start()
 
         new_event = \
             EventModel(google_calendar_event_id=self.google_calendar_event_id,
@@ -43,7 +44,7 @@ class EventAccess(BaseAccess):
                        user_id=self.user_id)
         session.add(new_event)
         session.commit()
-        return new_event.id
+        return new_event
 
     def query_by_google_calendar_event_id(self) -> DeclarativeMeta:
         event = session.query(EventModel).filter_by(
