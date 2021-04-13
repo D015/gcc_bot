@@ -18,5 +18,7 @@ async def result_calendar(callback_query: CallbackQuery, callback_data: dict):
         state = dp.current_state(user=callback_query.from_user.id)
         await state.set_state(States.all()[int('1')])
         await callback_query.message.answer(
-            f"Вы выбрали {date.strftime('%d/%m/%Y')}\nНапишите, пожалуйста, время используя цифры (можно использовать какой-нибудь не цифровой разделитель между часами и минутами)",
+            f"Вы выбрали {date.strftime('%d/%m/%Y')}\n"
+            f"Напишите, пожалуйста, время используя цифры "
+            f"(можно использовать какой-нибудь не цифровой разделитель между часами и минутами)",
             reply_markup=ReplyKeyboardRemove())

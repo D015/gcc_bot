@@ -2,5 +2,6 @@ aiogram==2.12.1
 gcsa==1.2.0
 SQLAlchemy==1.4.3
 psycopg2-binary==2.8.6
+redis==3.5.3
 
 alembic==1.5.8
