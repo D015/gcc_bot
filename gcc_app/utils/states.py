@@ -6,7 +6,7 @@ class States(Helper):
 
     CREATE_EVENT_STATE_0 = ListItem()
     EVENT_DATE_STATE_1 = ListItem()
-    STATE_2 = ListItem()
+    EVENT_DATE_STATE_2 = ListItem()
     STATE_3 = ListItem()
     STATE_4 = ListItem()
     STATE_5 = ListItem()
