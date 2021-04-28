@@ -17,7 +17,7 @@ engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=True)
 DB = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
-redis_db = r = redis.Redis(**REDIS_URI)
+redis_db = redis.Redis(**REDIS_URI)
 
 bot = Bot(token=TOKEN_BOT)
 # dp = Dispatcher(bot)

@@ -5,8 +5,8 @@ from sqlalchemy import (Column,
                         ForeignKey)
 from sqlalchemy.orm import relationship, backref
 
+from gcc_app.global_utils import create_uuid4_hex
 from gcc_app.models.base import BaseModel
-from gcc_app.utils import create_uuid4, create_default_start
 
 
 class EventModel(BaseModel):
@@ -15,7 +15,7 @@ class EventModel(BaseModel):
     id = Column(Integer, ForeignKey('base_model.id'), primary_key=True)
     # todo move default=create_uuid4 into def __init__
     google_calendar_event_id = Column(String(1024), index=True, unique=True,
-                                      default=create_uuid4)
+                                      default=create_uuid4_hex)
     summary = Column(String(56))
     # todo decide whether to make a default
     #  in the model (start=create_default_start)  or not
