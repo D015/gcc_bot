@@ -3,7 +3,7 @@ from aiogram import types
 from gcc_app.app import dp
 from gcc_app.global_utils import redis_set
 from gcc_app.utils import States
-from gcc_app.views.aiogramcalendar import create_calendar
+from gcc_app.keyboards import create_calendar
 
 
 @dp.message_handler(state='*', commands=['create_event'])

@@ -1,14 +1,11 @@
 from typing import Union
 
 from aiogram import types
-from aiogram.types import CallbackQuery, ReplyKeyboardRemove
 
 from gcc_app.app import dp
 from gcc_app.global_utils import test_print, redis_get, get_time_from_string, \
     redis_set
 from gcc_app.utils import States
-from gcc_app.views.aiogramcalendar import (calendar_callback,
-                                           process_calendar_selection)
 
 
 @dp.message_handler(state=States.EVENT_DATE_STATE_1)
