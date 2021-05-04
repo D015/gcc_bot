@@ -17,7 +17,8 @@ def create_calendar(year=datetime.now().year, month=datetime.now().month):
     """
     inline_kb = InlineKeyboardMarkup(row_width=7)
     ignore_callback = \
-        calendar_callback.new("IGNORE", year, month, 0)  # for buttons with no answer
+        calendar_callback.new("IGNORE", year, month,
+                              0)  # for buttons with no answer
     # First row - Month and Year
     inline_kb.row()
     inline_kb.insert(InlineKeyboardButton(
@@ -37,7 +38,7 @@ def create_calendar(year=datetime.now().year, month=datetime.now().month):
     for week in month_calendar:
         inline_kb.row()
         for day in week:
-            if(day == 0):
+            if (day == 0):
                 inline_kb.insert(InlineKeyboardButton(
                     " ", callback_data=ignore_callback))
             else:
@@ -51,14 +52,14 @@ def create_calendar(year=datetime.now().year, month=datetime.now().month):
     inline_kb.row()
     inline_kb.insert(
         InlineKeyboardButton(
-            "<", callback_data=\
+            "<", callback_data= \
                 calendar_callback.new("PREV-MONTH", year, month, day)))
 
     inline_kb.insert(
         InlineKeyboardButton(f'{calendar.month_name[month]}',
                              callback_data=ignore_callback))
     inline_kb.insert(
-        InlineKeyboardButton(">", callback_data=\
+        InlineKeyboardButton(">", callback_data= \
             calendar_callback.new("NEXT-MONTH", year, month, day)))
 
     return inline_kb
@@ -80,11 +81,10 @@ async def process_calendar_selection(query, data):
         await query.answer(cache_time=60)
     # user picked a day button, return date
     elif data['act'] == "DAY":
-        await query.message.delete_reply_markup()   # removing inline keyboard
-        return_data = True,\
-                      datetime(int(data['year']),
-                               int(data['month']),
-                               int(data['day']))
+        await query.message.delete_reply_markup()  # removing inline keyboard
+        return_data = True, datetime(int(data['year']),
+                                     int(data['month']),
+                                     int(data['day']))
     # user navigates to previous year, editing message with new calendar
     elif data['act'] == "PREV-YEAR":
         prev_date = temp_date - timedelta(days=365)

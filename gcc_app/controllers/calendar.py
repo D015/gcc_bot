@@ -1,11 +1,12 @@
-from aiogram.types import CallbackQuery, ReplyKeyboardRemove
+from aiogram.types import CallbackQuery
 
 from gcc_app.app import dp
+from gcc_app.constants import key_unfinished_event_creation
 from gcc_app.global_utils import redis_set, redis_get
 
 from gcc_app.utils import States
 from gcc_app.keyboards import (calendar_callback,
-                               process_calendar_selection)
+                               process_calendar_selection, create_time_board)
 
 
 @dp.callback_query_handler(calendar_callback.filter(),
@@ -14,7 +15,8 @@ async def result_calendar(callback_query: CallbackQuery, callback_data: dict):
     selected, event_date = await process_calendar_selection(callback_query,
                                                             callback_data)
 
-    redis_name = f'{callback_query.from_user.id}_unfinished_event_creation'
+    redis_name = \
+        f'{callback_query.from_user.id}_{key_unfinished_event_creation}'
     unfinished_event_creation: dict = redis_get(redis_name)
     unfinished_event_creation.update({'date_time': event_date})
     redis_set(redis_name, unfinished_event_creation)
@@ -26,5 +28,5 @@ async def result_calendar(callback_query: CallbackQuery, callback_data: dict):
             f"Вы выбрали {event_date.strftime('%d/%m/%Y')}\n"
             f"Напишите, пожалуйста, время используя цифры "
             f"(можно использовать какой-нибудь не цифровой разделитель"
-            f"между часами и минутами)",
-            reply_markup=ReplyKeyboardRemove())
+            f"между часами и минутами)", reply_markup=create_time_board())
+            # reply_markup=ReplyKeyboardRemove())
