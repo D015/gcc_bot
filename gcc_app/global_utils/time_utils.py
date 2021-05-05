@@ -11,5 +11,3 @@ def get_time_from_string(text: str) -> Union[dict, float]:
             time_from_string = {'hour': hour, 'minute': minute}
             return time_from_string
     return False
-
-

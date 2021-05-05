@@ -55,8 +55,8 @@ async def result_time(message: types.Message):
         hour = event_time['hour']
         minute = event_time['minute']
         # todo use it in def callback_time
-        hour_text = str(hour) if hour < 0 else f'0{hour}'
-        minute_text = str(minute) if minute < 0 else f'0{minute}'
+        hour_text = str(hour) if hour >= 10 else f'0{hour}'
+        minute_text = str(minute) if minute >= 10 else f'0{minute}'
         await message.answer(f"Вы ввели: {hour_text}:{minute_text}")
         redis_name = \
             f'{message.from_user.id}_{key_unfinished_event_creation}'
@@ -70,4 +70,6 @@ async def result_time(message: types.Message):
         state = dp.current_state(user=message.from_user.id)
         await state.set_state(States.all()[int('2')])
     else:
-        pass
+        await message.answer(f"Некоректный ввод!\n"
+                             f"Введите время в формате:\n"
+                             f"цифры пробел цифры")

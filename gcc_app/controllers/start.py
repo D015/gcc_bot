@@ -6,7 +6,6 @@ from gcc_app.app import dp
 
 @dp.message_handler(commands=['start'])
 async def process_start_command(message: types.Message):
-    print(message)
 
     user_id = UserAccess(telegram_user_id=message.from_user.id,
                          is_bot=message.from_user.is_bot,
@@ -15,7 +14,5 @@ async def process_start_command(message: types.Message):
                          username=message.from_user.username,
                          language_code=message.from_user.language_code). \
         create_for_start()
-
-    print(user_id)
 
     await message.reply("Привет!\nНапиши мне что-нибудь!")

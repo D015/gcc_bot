@@ -26,8 +26,6 @@ REDIS_URI = {'host': REDIS_HOST,
              'charset': 'utf-8',
              'decode_responses': False}
 
-
-
 TOKEN_BOT = settings.token_bot
 
 

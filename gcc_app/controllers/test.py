@@ -22,12 +22,12 @@ async def process_test_command(message: types.Message):
     # # print(type(message.from_user.is_bot))
     # # user_new_id = UserAccess(telegram_user_id=32111).create()
     # # print(user_new_id)
-    event_model_new = EventAccess(user_id=1).create()
+    # event_model_new = EventAccess(user_id=1).create()
 
     # print(event_model_new.google_calendar_event_id)
     # print(type(event_model_new.google_calendar_event_id))
-    event_new = \
-        EventGcalAPI(event_id=event_model_new.google_calendar_event_id).create()
+    # event_new = \
+        # EventGcalAPI(event_id=event_model_new.google_calendar_event_id).create()
 
     # user = UserAccess(telegram_user_id=32111).query_by_telegram_user_id()
     # event = EventAccess(
@@ -67,4 +67,5 @@ async def process_test_command(message: types.Message):
     # print('--------------------')
     # print(event.user)
 
-    await message.reply(f"Привет!\n Это тест!\ndb - {event_model_new}\ngc - {event_new}")
+    # await message.reply(f"Привет!\n Это тест!\ndb - {event_model_new}\ngc - {event_new}")
+    await message.reply(f"Привет!\n Это тест!")
