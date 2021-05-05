@@ -1,6 +1,6 @@
 from aiogram.types import CallbackQuery
 
-from gcc_app.app import dp
+from gcc_app.app import dp, bot
 from gcc_app.constants import key_unfinished_event_creation
 from gcc_app.global_utils import redis_set, redis_get
 
@@ -23,10 +23,10 @@ async def result_calendar(callback_query: CallbackQuery, callback_data: dict):
 
     if selected:
         state = dp.current_state(user=callback_query.from_user.id)
+        await bot.answer_callback_query(callback_query.id,
+                                        text=event_date.strftime('%d/%m/%Y'))
         await state.set_state(States.all()[int('1')])
         await callback_query.message.answer(
-            f"Вы выбрали {event_date.strftime('%d/%m/%Y')}\n"
-            f"Напишите, пожалуйста, время используя цифры "
-            f"(можно использовать какой-нибудь не цифровой разделитель"
-            f"между часами и минутами)", reply_markup=create_time_board())
-            # reply_markup=ReplyKeyboardRemove())
+            f"Вы выбрали {event_date.strftime('%d/%m/%Y')}")
+        await callback_query.message.answer(
+            f'Выберите, пожалуйста, время:', reply_markup=create_time_board())

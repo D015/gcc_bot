@@ -1,5 +1,5 @@
 import re
-from typing import Any, Union
+from typing import Union
 
 
 def get_time_from_string(text: str) -> Union[dict, float]:
