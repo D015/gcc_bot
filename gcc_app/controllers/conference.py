@@ -18,7 +18,7 @@ async def process_conference_link(message: types.Message):
             f'{message.from_user.id}_{key_unfinished_event_creation}'
 
         unfinished_event_creation: dict = redis_get(redis_name)
-        unfinished_event_creation.update({process_conference_link: text})
+        unfinished_event_creation.update({conference_link: text})
         redis_set(redis_name, unfinished_event_creation)
         state = dp.current_state(user=message.from_user.id)
         await state.set_state(States.all()[3])
