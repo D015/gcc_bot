@@ -11,7 +11,7 @@ from gcc_app.keyboards import create_time_board
 from gcc_app.utils import States
 
 
-@dp.callback_query_handler(lambda c: c.data, state=States.EVENT_DATE_STATE_1)
+@dp.callback_query_handler(lambda c: c.data, state=States._1_EVENT_DATE_STATE)
 async def callback_time(callback_query: types.CallbackQuery):
     event_time: Union[dict, float] = get_time_from_string(callback_query.data)
     if event_time:
@@ -29,9 +29,11 @@ async def callback_time(callback_query: types.CallbackQuery):
         redis_set(redis_name, unfinished_event_creation)
 
         state = dp.current_state(user=callback_query.from_user.id)
-        await state.set_state(States.all()[int('2')])
+        await state.set_state(States.all()[2])
 
         await callback_query.message.answer(f"Вы выбрали {callback_query.data}")
+        await callback_query.message.answer("Введите ссылку онлайн-конференции")
+
     elif callback_query.data.startswith(navigation):
         other_part_index = callback_query.data.split('_')[1]
         other_part_index = convert_str_to_int(other_part_index)
@@ -47,8 +49,7 @@ async def callback_time(callback_query: types.CallbackQuery):
             f"между часами и минутами")
 
 
-
-@dp.message_handler(state=States.EVENT_DATE_STATE_1)
+@dp.message_handler(state=States._1_EVENT_DATE_STATE)
 async def result_time(message: types.Message):
     event_time: Union[dict, float] = get_time_from_string(message.text)
     if event_time:
@@ -58,6 +59,8 @@ async def result_time(message: types.Message):
         hour_text = str(hour) if hour >= 10 else f'0{hour}'
         minute_text = str(minute) if minute >= 10 else f'0{minute}'
         await message.answer(f"Вы ввели: {hour_text}:{minute_text}")
+        await message.answer("Введите ссылку онлайн-конференции")
+
         redis_name = \
             f'{message.from_user.id}_{key_unfinished_event_creation}'
         unfinished_event_creation: dict = redis_get(redis_name)
@@ -68,7 +71,8 @@ async def result_time(message: types.Message):
         unfinished_event_creation['date_time'] = event_date_time
         redis_set(redis_name, unfinished_event_creation)
         state = dp.current_state(user=message.from_user.id)
-        await state.set_state(States.all()[int('2')])
+        await state.set_state(States.all()[2])
+
     else:
         await message.answer(f"Некоректный ввод!\n"
                              f"Введите время в формате:\n"

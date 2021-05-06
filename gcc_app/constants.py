@@ -1,6 +1,5 @@
 from typing import Union
 
-
 default_summary: str = 'Untitled'
 
 # Default delta in hours between start and time.now()
@@ -13,4 +12,4 @@ key_unfinished_event_creation = 'unfinished_event_creation'
 navigation = 'navigation'
 time_text = 'time_text'
 
-
+conference_link = 'conference_link'

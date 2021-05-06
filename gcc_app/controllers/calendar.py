@@ -10,7 +10,7 @@ from gcc_app.keyboards import (calendar_callback,
 
 
 @dp.callback_query_handler(calendar_callback.filter(),
-                           state=States.CREATE_EVENT_STATE_0)
+                           state=States._0_CREATE_EVENT_STATE)
 async def result_calendar(callback_query: CallbackQuery, callback_data: dict):
     selected, event_date = await process_calendar_selection(callback_query,
                                                             callback_data)
@@ -25,7 +25,7 @@ async def result_calendar(callback_query: CallbackQuery, callback_data: dict):
         state = dp.current_state(user=callback_query.from_user.id)
         await bot.answer_callback_query(callback_query.id,
                                         text=event_date.strftime('%d/%m/%Y'))
-        await state.set_state(States.all()[int('1')])
+        await state.set_state(States.all()[1])
         await callback_query.message.answer(
             f"Вы выбрали {event_date.strftime('%d/%m/%Y')}")
         await callback_query.message.answer(

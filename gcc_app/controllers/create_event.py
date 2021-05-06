@@ -12,7 +12,7 @@ async def process_create_event_command(message: types.Message):
     redis_name = f'{message.from_user.id}_{key_unfinished_event_creation}'
     redis_set(redis_name, {})
     state = dp.current_state(user=message.from_user.id)
-    await state.set_state(States.all()[int('0')])
+    await state.set_state(States.all()[0])
 
     await message.answer(f"Выберите, пожалуйста, дату:",
                          reply_markup=create_calendar())
