@@ -13,3 +13,4 @@ navigation = 'navigation'
 time_text = 'time_text'
 
 conference_link = 'conference_link'
+code_link = 'code_link'
