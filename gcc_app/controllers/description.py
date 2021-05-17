@@ -8,11 +8,11 @@ from gcc_app.global_utils import (redis_get,
 from gcc_app.utils import States
 
 
-@dp.message_handler(state=States._2_EVENT_TIME_STATE)
+@dp.message_handler(state=States._4_EVENT_TIME_STATE)
 async def process_conference_link(message: types.Message):
     text = message.text
-    if text.startswith('http') and '.' in text and '//' in text:
-
+    bad_words = find_bad_words(text)
+    if not(bad_words):
         await message.reply("Ваша ссылка на онлайн-конференцию принята")
         redis_name = \
             f'{message.from_user.id}_{KEY_UNFINISHED_EVENT_CREATION}'
@@ -24,6 +24,5 @@ async def process_conference_link(message: types.Message):
         await state.set_state(States.all()[3])
         await message.answer('Введите ссылку на обсуждаемый code')
     else:
-        await message.answer('Введите ссылку на онлайн-конференцию\n'
-                             'это должно быть URI '
-                             'и начинаться с "http" или "https"')
+        await message.answer('Повторите, пожалуйста, описание встречи'
+                             ' используя только цензурные слова и фраз.')

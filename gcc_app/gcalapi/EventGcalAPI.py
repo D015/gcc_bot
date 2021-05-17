@@ -6,7 +6,7 @@ from gcsa.event import Event
 from googleapiclient.errors import HttpError
 
 from gcc_app.app import calendar
-from gcc_app.constants import default_summary
+from gcc_app.constants import DEFAULT_SUMMARY
 from gcc_app.utils import create_default_start
 
 
@@ -22,7 +22,7 @@ class EventGcalAPI:
     location: Optional[str] = None
 
     def create(self) -> Optional[Event]:
-        self.summary = self.summary if self.summary else default_summary
+        self.summary = self.summary if self.summary else DEFAULT_SUMMARY
 
         if type(self.start) is not datetime and type(self.start) is not date:
             self.start = create_default_start()

@@ -27,6 +27,8 @@ dp.middleware.setup(LoggingMiddleware())
 calendar = GoogleCalendar('juniors.py.code.review@gmail.com')
 
 
+
+
 async def shutdown(dispatcher: Dispatcher):
     await dispatcher.storage.close()
     await dispatcher.storage.wait_closed()

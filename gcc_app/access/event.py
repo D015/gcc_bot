@@ -7,7 +7,7 @@ from sqlalchemy.orm import DeclarativeMeta
 
 from gcc_app.access.base import BaseAccess
 from gcc_app.app import session
-from gcc_app.constants import default_summary
+from gcc_app.constants import DEFAULT_SUMMARY
 from gcc_app.models.event import EventModel
 from gcc_app.utils import create_default_start
 
@@ -28,7 +28,7 @@ class EventAccess(BaseAccess):
     __model: Optional[DeclarativeMeta] = EventModel
 
     def create(self) -> EventModel:
-        self.summary = self.summary if self.summary else default_summary
+        self.summary = self.summary if self.summary else DEFAULT_SUMMARY
 
         if type(self.start) is not datetime and type(self.start) is not date:
             self.start = create_default_start()

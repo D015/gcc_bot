@@ -3,8 +3,8 @@ from typing import Union
 from aiogram import types
 
 from gcc_app.app import dp, bot
-from gcc_app.constants import key_unfinished_event_creation, navigation, \
-    part_day_indices, time_text
+from gcc_app.constants import KEY_UNFINISHED_EVENT_CREATION, NAVIGATION, \
+    PART_DAY_INDICES, TIME_TEXT
 from gcc_app.global_utils import test_print, redis_get, get_time_from_string, \
     redis_set, convert_str_to_int
 from gcc_app.keyboards import create_time_board
@@ -20,7 +20,7 @@ async def callback_time(callback_query: types.CallbackQuery):
         await callback_query.message.delete_reply_markup()
 
         redis_name = \
-            f'{callback_query.from_user.id}_{key_unfinished_event_creation}'
+            f'{callback_query.from_user.id}_{KEY_UNFINISHED_EVENT_CREATION}'
         unfinished_event_creation: dict = redis_get(redis_name)
 
         event_date_time = unfinished_event_creation['date_time'].replace(
@@ -34,14 +34,14 @@ async def callback_time(callback_query: types.CallbackQuery):
         await callback_query.message.answer(f"Вы выбрали {callback_query.data}")
         await callback_query.message.answer("Введите ссылку онлайн-конференции")
 
-    elif callback_query.data.startswith(navigation):
+    elif callback_query.data.startswith(NAVIGATION):
         other_part_index = callback_query.data.split('_')[1]
         other_part_index = convert_str_to_int(other_part_index)
         if other_part_index is not None \
-                and other_part_index in part_day_indices:
+                and other_part_index in PART_DAY_INDICES:
             await callback_query.message.edit_reply_markup(
                 reply_markup=create_time_board(other_part_index))
-    elif callback_query.data == time_text:
+    elif callback_query.data == TIME_TEXT:
         await callback_query.message.delete_reply_markup()
         await callback_query.message.answer(
             f"Напишите, пожалуйста, время используя цифры "
@@ -62,7 +62,7 @@ async def result_time(message: types.Message):
         await message.answer("Введите ссылку онлайн-конференции")
 
         redis_name = \
-            f'{message.from_user.id}_{key_unfinished_event_creation}'
+            f'{message.from_user.id}_{KEY_UNFINISHED_EVENT_CREATION}'
         unfinished_event_creation: dict = redis_get(redis_name)
 
         event_date_time = unfinished_event_creation['date_time'].replace(

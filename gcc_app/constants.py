@@ -1,16 +1,29 @@
+import os
 from typing import Union
 
-default_summary: str = 'Untitled'
+from gcc_app.global_utils import ReaderTXT
+
+DEFAULT_SUMMARY: str = 'Untitled'
 
 # Default delta in hours between start and time.now()
-default_delta_start_and_now: Union[float, int] = 1
-number_of_hours_in_board = 6
-part_day_indices = set(range(4))
-time_board_part_index = 3
-key_unfinished_event_creation = 'unfinished_event_creation'
+DEFAULT_DELTA_START_AND_NOW: Union[float, int] = 1
+NUMBER_OF_HOURS_IN_BOARD = 6
+PART_DAY_INDICES = set(range(4))
+TIME_BOARD_PART_INDEX = 3
+KEY_UNFINISHED_EVENT_CREATION = 'unfinished_event_creation'
 
-navigation = 'navigation'
-time_text = 'time_text'
+NAVIGATION = 'navigation'
+TIME_TEXT = 'time_text'
 
-conference_link = 'conference_link'
-code_link = 'code_link'
+CONFERENCE_LINK = 'conference_link'
+CODE_LINK = 'code_link'
+
+
+EVENT_DESCRIPTION_LENGTH = 180
+EVENT_TITLE_LENGTH = 60
+
+APP_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+BAD_WORDS_FILE_ROOT = 'data/bad_words.txt'
+BAD_WORDS_FILE = os.path.join(APP_ROOT, BAD_WORDS_FILE_ROOT)
+BAD_WORDS = ReaderTXT(BAD_WORDS_FILE).read_txt_into_frozenset()
+print(type(BAD_WORDS), BAD_WORDS)

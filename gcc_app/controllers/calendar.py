@@ -1,7 +1,7 @@
 from aiogram.types import CallbackQuery
 
 from gcc_app.app import dp, bot
-from gcc_app.constants import key_unfinished_event_creation
+from gcc_app.constants import KEY_UNFINISHED_EVENT_CREATION
 from gcc_app.global_utils import redis_set, redis_get
 
 from gcc_app.utils import States
@@ -16,7 +16,7 @@ async def result_calendar(callback_query: CallbackQuery, callback_data: dict):
                                                             callback_data)
 
     redis_name = \
-        f'{callback_query.from_user.id}_{key_unfinished_event_creation}'
+        f'{callback_query.from_user.id}_{KEY_UNFINISHED_EVENT_CREATION}'
     unfinished_event_creation: dict = redis_get(redis_name)
     unfinished_event_creation.update({'date_time': event_date})
     redis_set(redis_name, unfinished_event_creation)
