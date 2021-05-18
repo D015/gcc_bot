@@ -4,7 +4,7 @@ from aiogram import types
 
 from gcc_app.app import dp, bot
 from gcc_app.constants import KEY_UNFINISHED_EVENT_CREATION, NAVIGATION, \
-    PART_DAY_INDICES, TIME_TEXT
+    PART_DAY_INDICES, TIME_TEXT, DATE_TIME
 from gcc_app.global_utils import test_print, redis_get, get_time_from_string, \
     redis_set, convert_str_to_int
 from gcc_app.keyboards import create_time_board
@@ -23,9 +23,9 @@ async def callback_time(callback_query: types.CallbackQuery):
             f'{callback_query.from_user.id}_{KEY_UNFINISHED_EVENT_CREATION}'
         unfinished_event_creation: dict = redis_get(redis_name)
 
-        event_date_time = unfinished_event_creation['date_time'].replace(
+        event_date_time = unfinished_event_creation[DATE_TIME].replace(
             hour=event_time['hour'], minute=event_time['minute'])
-        unfinished_event_creation['date_time'] = event_date_time
+        unfinished_event_creation[DATE_TIME] = event_date_time
         redis_set(redis_name, unfinished_event_creation)
 
         state = dp.current_state(user=callback_query.from_user.id)

@@ -15,8 +15,12 @@ KEY_UNFINISHED_EVENT_CREATION = 'unfinished_event_creation'
 NAVIGATION = 'navigation'
 TIME_TEXT = 'time_text'
 
+HOUR = 'hour'
+MINUTE = 'minute'
+DATE_TIME = 'date_time'
 CONFERENCE_LINK = 'conference_link'
 CODE_LINK = 'code_link'
+DESCRIPTION = 'description'
 
 YES_CONFIRMATION = 'YES_CONFIRMATION'
 NO_REFUSAL = 'NO_REFUSAL'
