@@ -10,7 +10,7 @@ from gcc_app.keyboards import (calendar_callback,
 
 
 @dp.callback_query_handler(calendar_callback.filter(),
-                           state=States._0_CREATE_EVENT_STATE)
+                           state=States.S_0_CREATE_EVENT)
 async def result_calendar(callback_query: CallbackQuery, callback_data: dict):
     selected, event_date = await process_calendar_selection(callback_query,
                                                             callback_data)

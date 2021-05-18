@@ -4,10 +4,12 @@ from aiogram.utils.helper import Helper, HelperMode, ListItem
 class States(Helper):
     mode = HelperMode.snake_case
 
-    _0_CREATE_EVENT_STATE = ListItem()
-    _1_EVENT_DATE_STATE = ListItem()
-    _2_EVENT_TIME_STATE = ListItem()
-    _3_CONFERENCE_LINK_STATE = ListItem()
-    _4_EVENT_CODE_STATE = ListItem()
-    _5_EVENT_DESCRIPTION_STATE = ListItem()
-    _6_EVENT_CONFIRMED_STATE = ListItem()
+    S_0_CREATE_EVENT = ListItem()
+    S_1_EVENT_DATE = ListItem()
+    S_2_EVENT_TIME = ListItem()
+    S_3_CONFERENCE_LINK = ListItem()
+    S_4_EVENT_CODE = ListItem()
+    S_5_CONFIRMED_INTENT_DESCRIPTION = ListItem()
+    S_6_NOT_CONFIRMED_INTENT_DESCRIPTION = ListItem()
+    S_7_EVENT_DESCRIPTION = ListItem()
+    S_8_CONFIRMED_EVENT = ListItem()

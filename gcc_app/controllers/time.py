@@ -11,7 +11,7 @@ from gcc_app.keyboards import create_time_board
 from gcc_app.utils import States
 
 
-@dp.callback_query_handler(lambda c: c.data, state=States._1_EVENT_DATE_STATE)
+@dp.callback_query_handler(lambda c: c.data, state=States.S_1_EVENT_DATE)
 async def callback_time(callback_query: types.CallbackQuery):
     event_time: Union[dict, float] = get_time_from_string(callback_query.data)
     if event_time:
@@ -49,7 +49,7 @@ async def callback_time(callback_query: types.CallbackQuery):
             f"между часами и минутами")
 
 
-@dp.message_handler(state=States._1_EVENT_DATE_STATE)
+@dp.message_handler(state=States.S_1_EVENT_DATE)
 async def result_time(message: types.Message):
     event_time: Union[dict, float] = get_time_from_string(message.text)
     if event_time:

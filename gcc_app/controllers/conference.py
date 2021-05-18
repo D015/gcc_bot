@@ -8,7 +8,7 @@ from gcc_app.global_utils import (redis_get,
 from gcc_app.utils import States
 
 
-@dp.message_handler(state=States._2_EVENT_TIME_STATE)
+@dp.message_handler(state=States.S_2_EVENT_TIME)
 async def process_conference_link(message: types.Message):
     text = message.text
     if text.startswith('http') and '.' in text and '//' in text:
