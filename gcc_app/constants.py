@@ -3,6 +3,7 @@ from typing import Union
 
 from gcc_app.global_utils import ReaderTXT
 
+
 DEFAULT_SUMMARY: str = 'Untitled'
 
 # Default delta in hours between start and time.now()

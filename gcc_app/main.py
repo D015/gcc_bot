@@ -1,10 +1,9 @@
 from aiogram.utils import executor
 
-from gcc_app.app import dp, shutdown
+from gcc_app.app import dp, shutdown, startup
 from gcc_app import controllers
-
 
 controllers = controllers
 # todo skip_updates=True ?
 if __name__ == '__main__':
-    executor.start_polling(dp, on_shutdown=shutdown)
+    executor.start_polling(dp, on_shutdown=shutdown, on_startup=startup)

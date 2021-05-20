@@ -52,6 +52,7 @@ async def process_event_description(message: types.Message):
         redis_set(redis_name, unfinished_event_creation)
         state = dp.current_state(user=message.from_user.id)
         await state.set_state(States.all()[7])
+        print(redis_get(redis_name))
         await message.reply(text='Опубликовать встречу?',
                             # todo add all entered event parameters
                             reply_markup=create_confirmation_board())

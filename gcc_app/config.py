@@ -28,4 +28,9 @@ REDIS_URI = {'host': REDIS_HOST,
 
 TOKEN_BOT = settings.token_bot
 
+COMMAND_CREATE_EVENT = ('/create_event', "Создать событие")
+COMMAND_HELP = ('/help', "Помощь")
+COMMAND_START = ('/start', "Старт")
+COMMAND_TEST = ('/test', "Тест")
+
 
