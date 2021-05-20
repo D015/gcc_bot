@@ -18,9 +18,12 @@ TIME_TEXT = 'time_text'
 
 HOUR = 'hour'
 MINUTE = 'minute'
-DATE_TIME = 'date_time'
-CONFERENCE_LINK = 'conference_link'
-CODE_LINK = 'code_link'
+
+# keys for redis and requests_to_user
+DATE = 'date'
+TIME = 'time'
+CONFERENCE = 'conference'
+CODE = 'code'
 DESCRIPTION = 'description'
 
 YES_CONFIRMATION = 'YES_CONFIRMATION'
