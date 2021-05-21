@@ -4,35 +4,32 @@ from aiogram import types
 
 from gcc_app.app import dp, bot
 from gcc_app.constants import KEY_UNFINISHED_EVENT_CREATION, NAVIGATION, \
-    PART_DAY_INDICES, TIME_TEXT, DATE_TIME
+    PART_DAY_INDICES, TIME_TEXT, TIME, HOUR, MINUTE
 from gcc_app.global_utils import test_print, redis_get, get_time_from_string, \
     redis_set, convert_str_to_int
 from gcc_app.keyboards import create_time_board
 from gcc_app.utils import EventCreationStates
+from gcc_app.utils.creation_dialogue import requests_to_user
 
 
-@dp.callback_query_handler(lambda c: c.data, state=EventCreationStates.date)
+@dp.callback_query_handler(lambda c: c.data, state=EventCreationStates.time)
 async def callback_time(callback_query: types.CallbackQuery):
     event_time: Union[dict, float] = get_time_from_string(callback_query.data)
     if event_time:
         await bot.answer_callback_query(callback_query.id,
                                         text=callback_query.data)
         await callback_query.message.delete_reply_markup()
+        await callback_query.message.answer(f"Вы выбрали {callback_query.data}")
 
         redis_name = \
             f'{callback_query.from_user.id}_{KEY_UNFINISHED_EVENT_CREATION}'
         unfinished_event_creation: dict = redis_get(redis_name)
-
-        event_date_time = unfinished_event_creation[DATE_TIME].replace(
-            hour=event_time['hour'], minute=event_time['minute'])
-        unfinished_event_creation[DATE_TIME] = event_date_time
+        unfinished_event_creation.update({TIME: event_time})
         redis_set(redis_name, unfinished_event_creation)
 
-        state = dp.current_state(user=callback_query.from_user.id)
-        await state.set_state(EventCreationStates.all()[2])
-
-        await callback_query.message.answer(f"Вы выбрали {callback_query.data}")
-        await callback_query.message.answer("Введите ссылку онлайн-конференции")
+        next_state = await EventCreationStates.next()
+        function_key = next_state.split(':')[1]
+        await requests_to_user[function_key](callback_query.message)
 
     elif callback_query.data.startswith(NAVIGATION):
         other_part_index = callback_query.data.split('_')[1]
@@ -49,31 +46,25 @@ async def callback_time(callback_query: types.CallbackQuery):
             f"между часами и минутами")
 
 
-@dp.message_handler(state=EventCreationStates.date)
+@dp.message_handler(state=EventCreationStates.time)
 async def result_time(message: types.Message):
     event_time: Union[dict, float] = get_time_from_string(message.text)
+    print(event_time)
     if event_time:
-        hour = event_time['hour']
-        minute = event_time['minute']
-        # todo use it in def callback_time
-        hour_text = str(hour) if hour >= 10 else f'0{hour}'
-        minute_text = str(minute) if minute >= 10 else f'0{minute}'
-        await message.answer(f"Вы ввели: {hour_text}:{minute_text}")
-        await message.answer("Введите ссылку онлайн-конференции")
+        await message.answer(
+            f"Вы ввели: {event_time[HOUR]}:{event_time[MINUTE]}")
 
         redis_name = \
             f'{message.from_user.id}_{KEY_UNFINISHED_EVENT_CREATION}'
         unfinished_event_creation: dict = redis_get(redis_name)
-
-        event_date_time = unfinished_event_creation['date_time'].replace(
-            hour=hour, minute=minute)
-
-        unfinished_event_creation['date_time'] = event_date_time
+        unfinished_event_creation.update({TIME: event_time})
         redis_set(redis_name, unfinished_event_creation)
-        state = dp.current_state(user=message.from_user.id)
-        await state.set_state(EventCreationStates.all()[2])
+
+        next_state = await EventCreationStates.next()
+        function_key = next_state.split(':')[1]
+        await requests_to_user[function_key](message)
 
     else:
-        await message.answer(f"Некоректный ввод!\n"
+        await message.answer(f"Некорректный ввод!\n"
                              f"Введите время в формате:\n"
                              f"цифры пробел цифры")

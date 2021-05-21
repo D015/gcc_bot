@@ -6,7 +6,7 @@ from gcc_app.constants import KEY_UNFINISHED_EVENT_CREATION
 from gcc_app.global_utils import redis_set
 from gcc_app.utils import EventCreationStates
 from gcc_app.keyboards import create_calendar
-from gcc_app.utils.states import requests_to_user
+from gcc_app.utils.creation_dialogue import requests_to_user
 
 
 @dp.message_handler(state='*', commands=['create_event'])
