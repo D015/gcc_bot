@@ -1,17 +1,16 @@
 from aiogram import types
+from aiogram.dispatcher import FSMContext
 
 from gcc_app.app import dp, bot
-from gcc_app.constants import (KEY_UNFINISHED_EVENT_CREATION,
-                               CONFERENCE, YES_CONFIRMATION, NO_REFUSAL,
-                               DESCRIPTION)
-from gcc_app.global_utils import (redis_get,
-                                  redis_set, test_print)
+from gcc_app.constants import YES_CONFIRMATION, NO_REFUSAL
 from gcc_app.keyboards import create_confirmation_board
 from gcc_app.utils import EventCreationStates
+from gcc_app.utils.creation_dialogue import save_and_continue
 from gcc_app.utils.find_bad_words import find_bad_words
 
 
-@dp.callback_query_handler(lambda c: c.data, state=EventCreationStates.code)
+@dp.callback_query_handler(lambda c: c.data,
+                           state=EventCreationStates.description)
 async def process_confirmed_intent_description(
         callback_query: types.CallbackQuery):
     await bot.answer_callback_query(callback_query.id)
@@ -41,21 +40,10 @@ async def process_confirmed_intent_description(
 
 
 @dp.message_handler(state=EventCreationStates.description)
-async def process_event_description(message: types.Message):
+async def process_event_description(message: types.Message, state: FSMContext):
     text = message.text
     if text and not (await find_bad_words(text)):
-        redis_name = \
-            f'{message.from_user.id}_{KEY_UNFINISHED_EVENT_CREATION}'
-
-        unfinished_event_creation: dict = redis_get(redis_name)
-        unfinished_event_creation.update({DESCRIPTION: text})
-        redis_set(redis_name, unfinished_event_creation)
-        state = dp.current_state(user=message.from_user.id)
-        await state.set_state(EventCreationStates.all()[7])
-        print(redis_get(redis_name))
-        await message.reply(text='Опубликовать встречу?',
-                            # todo add all entered event parameters
-                            reply_markup=create_confirmation_board())
+        await save_and_continue(message=message, state=state, data=text)
     else:
         await message.answer('Повторите, пожалуйста, описание встречи'
                              ' используя только цензурные слова и фраз.')

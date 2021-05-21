@@ -1,28 +1,17 @@
 from aiogram import types
+from aiogram.dispatcher import FSMContext
 
 from gcc_app.app import dp
-from gcc_app.constants import (KEY_UNFINISHED_EVENT_CREATION,
-                               CONFERENCE)
-from gcc_app.global_utils import (redis_get,
-                                  redis_set, test_print)
 from gcc_app.utils import EventCreationStates
+from gcc_app.utils.creation_dialogue import save_and_continue
 
 
-@dp.message_handler(state=EventCreationStates.time)
-async def process_conference_link(message: types.Message):
+@dp.message_handler(state=EventCreationStates.conference)
+async def process_conference_link(message: types.Message, state: FSMContext):
     text = message.text
     if text.startswith('http') and '.' in text and '//' in text:
-
         await message.reply("Ваша ссылка на онлайн-конференцию принята")
-        redis_name = \
-            f'{message.from_user.id}_{KEY_UNFINISHED_EVENT_CREATION}'
-
-        unfinished_event_creation: dict = redis_get(redis_name)
-        unfinished_event_creation.update({CONFERENCE: text})
-        redis_set(redis_name, unfinished_event_creation)
-        state = dp.current_state(user=message.from_user.id)
-        await state.set_state(EventCreationStates.all()[3])
-        await message.answer('Введите ссылку на обсуждаемый code')
+        await save_and_continue(message=message, state=state, data=text)
     else:
         await message.answer('Введите ссылку на онлайн-конференцию\n'
                              'это должно быть URI '

@@ -22,9 +22,7 @@ REDIS_DB_INDEX = environ.get('REDIS_DB_INDEX', settings.redis_db_index)
 REDIS_URI = {'host': REDIS_HOST,
              'port': REDIS_PORT,
              'password': REDIS_PASSWORD,
-             'db': REDIS_DB_INDEX,
-             'charset': 'utf-8',
-             'decode_responses': False}
+             'db': REDIS_DB_INDEX}
 
 TOKEN_BOT = settings.token_bot
 

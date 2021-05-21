@@ -25,6 +25,10 @@ TIME = 'time'
 CONFERENCE = 'conference'
 CODE = 'code'
 DESCRIPTION = 'description'
+CONFIRMATION = 'confirmation'
+
+TEXT = 'message'
+REPLY_MARKUP = 'reply_markup'
 
 YES_CONFIRMATION = 'YES_CONFIRMATION'
 NO_REFUSAL = 'NO_REFUSAL'

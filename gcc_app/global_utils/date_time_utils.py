@@ -1,3 +1,4 @@
+import datetime
 import re
 from typing import Union
 
@@ -15,3 +16,11 @@ def get_time_from_string(text: str) -> Union[dict, float]:
             time_from_string = {HOUR: hour, MINUTE: minute}
             return time_from_string
     return False
+
+
+class DateTameStr(str):
+    def __new__(cls, date_time: datetime.datetime):
+        return super().__new__(cls, date_time.isoformat())
+
+    def get_datetime(self):
+        return datetime.datetime.fromisoformat(self)

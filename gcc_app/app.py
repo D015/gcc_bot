@@ -1,5 +1,6 @@
 import redis
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.contrib.fsm_storage.redis import RedisStorage
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.types import BotCommand
 from sqlalchemy import create_engine
@@ -20,12 +21,12 @@ DB = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
 
-redis_db = redis.Redis(**REDIS_URI)
+storage = RedisStorage(**REDIS_URI)
 
 calendar = GoogleCalendar('juniors.py.code.review@gmail.com')
 
 bot = Bot(token=TOKEN_BOT)
-dp = Dispatcher(bot, storage=MemoryStorage())
+dp = Dispatcher(bot, storage=storage)
 dp.middleware.setup(LoggingMiddleware())
 
 
@@ -47,8 +48,8 @@ async def set_commands(bot: Bot):
 
 
 async def shutdown(dispatcher: Dispatcher):
-    await dispatcher.storage.close()
-    await dispatcher.storage.wait_closed()
+    await dp.storage.close()
+    await dp.storage.wait_closed()
 
 
 async def startup(dispatcher: Dispatcher):
