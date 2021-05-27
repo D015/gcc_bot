@@ -18,7 +18,7 @@ def get_time_from_string(text: str) -> Union[dict, float]:
     return False
 
 
-class DateTameStr(str):
+class DateTimeStr(str):
     def __new__(cls, date_time: datetime.datetime):
         return super().__new__(cls, date_time.isoformat())
 

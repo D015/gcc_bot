@@ -43,7 +43,10 @@ async def process_confirmed_intent_description(
 async def process_event_description(message: types.Message, state: FSMContext):
     text = message.text
     if text and not (await find_bad_words(text)):
-        await save_and_continue(message=message, state=state, data=text)
+        await save_and_continue(message=message,
+                                state=state,
+                                state_class=EventCreationStates,
+                                data=text)
     else:
         await message.answer('Повторите, пожалуйста, описание встречи'
                              ' используя только цензурные слова и фраз.')

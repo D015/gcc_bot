@@ -4,12 +4,12 @@ from typing import Optional, Union
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from aiogram.dispatcher.filters.state import State, StatesGroup
+from aiogram.dispatcher.filters.state import State, StatesGroup, StatesGroupMeta
 from aiogram.types import InlineKeyboardMarkup
 
 from gcc_app.constants import DATE, TIME, CONFERENCE, CODE, DESCRIPTION, \
     TEXT, REPLY_MARKUP, CONFIRMATION
-from gcc_app.global_utils import DateTameStr
+from gcc_app.global_utils import DateTimeStr
 from gcc_app.keyboards import create_calendar, create_time_board, \
     create_confirmation_board
 
@@ -23,9 +23,7 @@ class EventCreationStates(StatesGroup):
     confirmation = State()
 
 
-async def go_to_next(state: FSMContext) -> str:
-    state_class_name = (await state.get_state()).split(':')[0]
-    state_class = globals().get(state_class_name)
+async def go_to_next(state_class: StatesGroupMeta) -> str:
     next_state = await state_class.next()
     next_state_name = next_state.split(':')[1]
     return next_state_name
@@ -34,8 +32,7 @@ async def go_to_next(state: FSMContext) -> str:
 async def save_state_data(
         state: FSMContext, data: Union[str, int, dict, datetime.datetime]):
     data_key = (await state.get_state()).split(':')[1]
-    data = DateTameStr(data) if type(data) == datetime.datetime else data
-    print(type(data))
+    data = DateTimeStr(data) if type(data) == datetime.datetime else data
     await state.update_data({data_key: data})
 
 
@@ -49,10 +46,11 @@ async def continue_for_next(
 async def save_and_continue(
         message: types.Message,
         state: FSMContext,
+        state_class: StatesGroupMeta,
         data: Union[str, int, dict]):
     await save_state_data(state=state, data=data)
 
-    next_state_name = await go_to_next(state=state)
+    next_state_name = await go_to_next(state_class=state_class)
     next_text = requests_to_user[next_state_name].get(TEXT)
     next_reply_markup = requests_to_user[next_state_name].get(REPLY_MARKUP)
 

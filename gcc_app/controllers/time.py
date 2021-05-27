@@ -21,7 +21,10 @@ async def callback_time(callback_query: types.CallbackQuery, state: FSMContext):
         await bot.answer_callback_query(callback_query.id, text=data)
         await message.delete_reply_markup()
         await message.answer(f"Выбрано {data}")
-        await save_and_continue(message=message, state=state, data=event_time)
+        await save_and_continue(message=message,
+                                state=state,
+                                state_class=EventCreationStates,
+                                data=event_time)
     elif data.startswith(NAVIGATION):
         other_part_index = data.split('_')[1]
         other_part_index = convert_str_to_int(other_part_index)

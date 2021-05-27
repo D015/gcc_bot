@@ -14,9 +14,13 @@ async def result_calendar(
         callback_query: CallbackQuery, callback_data: dict, state: FSMContext):
     selected, event_date = \
         await process_calendar_selection(callback_query, callback_data)
+    print(type(EventCreationStates))
+
     if selected:
         date: str = event_date.strftime('%d/%m/%Y')
         await bot.answer_callback_query(callback_query.id, text=date)
         await callback_query.message.answer(f"Выбрано {date}")
-        await save_and_continue(
-            message=callback_query.message, state=state, data=event_date)
+        await save_and_continue(message=callback_query.message,
+                                state=state,
+                                state_class=EventCreationStates,
+                                data=event_date)

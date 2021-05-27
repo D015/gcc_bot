@@ -11,7 +11,10 @@ async def process_conference_link(message: types.Message, state: FSMContext):
     text = message.text
     if text.startswith('http') and '.' in text and '//' in text:
         await message.reply("Ваша ссылка на онлайн-конференцию принята")
-        await save_and_continue(message=message, state=state, data=text)
+        await save_and_continue(message=message,
+                                state=state,
+                                state_class=EventCreationStates,
+                                data=text)
     else:
         await message.answer('Введите ссылку на онлайн-конференцию\n'
                              'это должно быть URI '
