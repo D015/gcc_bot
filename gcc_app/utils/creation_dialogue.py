@@ -11,7 +11,7 @@ from gcc_app.constants import DATE, TIME, CONFERENCE, CODE, DESCRIPTION, \
     TEXT, REPLY_MARKUP, CONFIRMATION
 from gcc_app.global_utils import DateTimeStr
 from gcc_app.keyboards import create_calendar, create_time_board, \
-    create_confirmation_board
+    create_confirmation_board, create_confirmation_button
 
 
 class EventCreationStates(StatesGroup):
@@ -65,5 +65,5 @@ requests_to_user = {
     CODE: {TEXT: "Введите ссылку на обсуждаемый code"},
     DESCRIPTION: {TEXT: "Введите описание встречи."},
     CONFIRMATION: {TEXT: "Опубликовать встречу?",
-                   REPLY_MARKUP: create_confirmation_board()},
+                   REPLY_MARKUP: create_confirmation_button()},
 }

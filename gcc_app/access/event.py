@@ -1,4 +1,3 @@
-# import datetime
 from dataclasses import dataclass
 from datetime import datetime, date
 from typing import Optional, Union
@@ -8,6 +7,7 @@ from sqlalchemy.orm import DeclarativeMeta
 from gcc_app.access.base import BaseAccess
 from gcc_app.app import session
 from gcc_app.constants import DEFAULT_SUMMARY
+from gcc_app.global_utils import create_uuid4_hex
 from gcc_app.models.event import EventModel
 from gcc_app.utils import create_default_start
 
@@ -22,6 +22,8 @@ class EventAccess(BaseAccess):
     # todo type(utc_time_offset) ?
     utc_time_offset: Optional[str] = None
     timezone: Optional[str] = None
+    conference_link: Optional[str] = None
+    document_link: Optional[str] = None
     description: Optional[str] = None
     location: Optional[str] = None
     user_id: Optional[int] = None
@@ -32,6 +34,8 @@ class EventAccess(BaseAccess):
 
         if type(self.start) is not datetime and type(self.start) is not date:
             self.start = create_default_start()
+        if self.google_calendar_event_id is None:
+            self.google_calendar_event_id = create_uuid4_hex()
 
         new_event = \
             EventModel(google_calendar_event_id=self.google_calendar_event_id,
@@ -39,6 +43,8 @@ class EventAccess(BaseAccess):
                        start=self.start,
                        end=self.end,
                        timezone=self.timezone,
+                       conference_link=self.conference_link,
+                       document_link = self.document_link,
                        description=self.description,
                        location=self.location,
                        user_id=self.user_id)
