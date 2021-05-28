@@ -17,12 +17,10 @@ def create_confirmation_board() -> InlineKeyboardMarkup:
 def create_confirmation_button() -> ReplyKeyboardMarkup:
     button_yes = KeyboardButton('👍 Yes')
     button_no = KeyboardButton('👎 No')
-    print('👍 Yes'.encode())
-    print('👎 No'.encode())
+    confirmation_kb = ReplyKeyboardMarkup(resize_keyboard=True,
+                                          one_time_keyboard=True)
+    confirmation_kb.add(button_yes, button_no)
 
-    confirmation_kb = ReplyKeyboardMarkup(
-        resize_keyboard=True, one_time_keyboard=True).\
-        add(button_yes, button_no)
     return confirmation_kb
 
 
