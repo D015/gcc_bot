@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from typing import Optional, Union
 
 from aiogram import types
@@ -23,16 +23,16 @@ class EventCreationStates(StatesGroup):
     confirmation = State()
 
 
-async def go_to_next(state_class: StatesGroupMeta) -> str:
+async def go_to_next(state_class: Union[StatesGroupMeta, StatesGroup]) -> str:
     next_state = await state_class.next()
     next_state_name = next_state.split(':')[1]
     return next_state_name
 
 
 async def save_state_data(
-        state: FSMContext, data: Union[str, int, dict, datetime.datetime]):
+        state: FSMContext, data: Union[str, int, dict, datetime]):
     data_key = (await state.get_state()).split(':')[1]
-    data = DateTimeStr(data) if type(data) == datetime.datetime else data
+    data = data.isoformat() if type(data) == datetime else data
     await state.update_data({data_key: data})
 
 
