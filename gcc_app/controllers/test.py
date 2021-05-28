@@ -10,13 +10,14 @@ from gcc_app.models.event import EventModel
 
 @dp.message_handler(commands=['test'])
 async def process_test_command(message: types.Message):
-
-    user_new = UserModel(telegram_user_id=456)
-    session.add(user_new)
+    user_id = UserAccess(
+        telegram_user_id=message.from_user.id).query_by_telegram_user_id().id
+    # user_new = UserModel(telegram_user_id=456)
+    # session.add(user_new)
     # session.flush()
     # events_new = EventModel()
     # session.add(events_new)
-    r = session.commit()
+    # r = session.commit()
     # print(events_new)
     # # print(type(message.from_user.id))
     # # print(type(message.from_user.is_bot))
@@ -68,4 +69,4 @@ async def process_test_command(message: types.Message):
     # print(event.user)
 
     # await message.reply(f"Привет!\n Это тест!\ndb - {event_model_new}\ngc - {event_new}")
-    await message.reply(f"Привет!\n Это тест! {r}")
+    await message.reply(f"Привет!\n Это тест! {user_id}")

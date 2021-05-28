@@ -30,7 +30,8 @@ async def result_confirmation(message: types.Message, state: FSMContext):
         date_time.replace(hour=int(state_event[TIME][HOUR]),
                           minute=int(state_event[TIME][MINUTE]))
 
-        user_id = UserAccess(telegram_user_id=message.from_user.id).id
+        user_id = UserAccess(telegram_user_id=message.from_user.id).\
+            query_by_telegram_user_id().id
 
         new_event = EventAccess(summary=last_first_name,
                                 start=date_time,
