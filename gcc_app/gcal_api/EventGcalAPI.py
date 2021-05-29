@@ -10,38 +10,30 @@ from gcc_app.constants import DEFAULT_SUMMARY
 from gcc_app.utils import create_default_start
 
 
-@dataclass
 class EventGcalAPI:
-    event_id: Optional[str] = None
-    summary: Optional[str] = None
-    # todo type(start end) - date ?
-    start: Union[datetime, date, None] = None
-    end: Union[datetime, date, None] = None
-    timezone: str = 'UTC'
-    description: Optional[str] = None
-    location: Optional[str] = None
-
-    def create(self) -> Optional[Event]:
-        self.summary = self.summary if self.summary else DEFAULT_SUMMARY
-
-        if type(self.start) is not datetime and type(self.start) is not date:
-            self.start = create_default_start()
+    @classmethod
+    def create(cls, event_id: Optional[str] = None,
+               summary: Optional[str] = None,
+               start: Union[datetime, date, None] = None,
+               description: Optional[str] = None,
+               location: Optional[str] = None) -> Optional[Event]:
+        summary = summary if summary else DEFAULT_SUMMARY
+        if type(start) is not datetime and type(start) is not date:
+            start = create_default_start()
         # by default, the Google calendar itself creates value from "event_id"
         # in order to set its own value for "event_id", you need to use the "id"
-        new_event = Event(id=self.event_id,
-                          summary=self.summary,
-                          start=self.start,
-                          end=self.end,
-                          timezone=self.timezone,
-                          description=self.description,
-                          location=self.location)
+        new_event = Event(id=event_id,
+                          summary=summary,
+                          start=start,
+                          description=description)
         calendar.add_event(new_event)
-        event = self.query_by_google_calendar_event_id()
+        event = cls.query_by_google_calendar_event_id(event_id=event_id)
         return event
 
-    def query_by_google_calendar_event_id(self) -> Optional[Event]:
+    @staticmethod
+    def query_by_google_calendar_event_id(event_id) -> Union[Event, bool, None]:
         try:
-            event = calendar.get_event(self.event_id)
+            event = calendar.get_event(event_id)
         except HttpError:
-            event = None
+            event = False
         return event

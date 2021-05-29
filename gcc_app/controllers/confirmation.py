@@ -9,6 +9,7 @@ from gcc_app.access.user import UserAccess
 from gcc_app.app import dp
 from gcc_app.constants import DATE, TIME, HOUR, MINUTE, CONFERENCE, CODE, \
     DESCRIPTION
+from gcc_app.gcal_api import EventGcalAPI
 
 from gcc_app.utils import EventCreationStates
 
@@ -22,43 +23,57 @@ async def result_confirmation(message: types.Message, state: FSMContext):
         await (await message.answer('.', reply_markup=ReplyKeyboardRemove())). \
             delete()
         state_event = await state.get_data()
-
+        # Adding event into db
         last_first_name = \
-            f'{message.from_user.last_name} {message.from_user.last_name}'
+            f'{message.from_user.last_name} {message.from_user.first_name}'
 
         date_time = datetime.fromisoformat(state_event[DATE])
-        date_time.replace(hour=int(state_event[TIME][HOUR]),
-                          minute=int(state_event[TIME][MINUTE]))
+        date_time = date_time.replace(hour=int(state_event[TIME][HOUR]),
+                                      minute=int(state_event[TIME][MINUTE]))
 
-        user_id = UserAccess(telegram_user_id=message.from_user.id).\
+        print(date_time)
+
+        user_id = UserAccess(telegram_user_id=message.from_user.id). \
             query_by_telegram_user_id().id
 
-        new_event = EventAccess(summary=last_first_name,
-                                start=date_time,
-                                conference_link=state_event[CONFERENCE],
-                                document_link=state_event[CODE],
-                                description=state_event[DESCRIPTION],
-                                user_id=user_id).create()
+        db_event = EventAccess(summary=last_first_name,
+                               start=date_time,
+                               conference_link=state_event[CONFERENCE],
+                               document_link=state_event[CODE],
+                               description=state_event[DESCRIPTION],
+                               user_id=user_id).create()
         await state.reset_state(with_data=True)
 
-        print(f'state {await state.get_state()}')
-        print(f'data {await state.get_data()}')
+        await message.answer(f"{db_event.id}\n"
+                             f"{db_event.summary}\n"
+                             f"{db_event.start}\n"
+                             f"{db_event.conference_link}\n"
+                             f"{db_event.document_link}\n"
+                             f"{db_event.description}\n"
+                             f"{db_event.google_calendar_event_id}")
 
-        await message.answer(f"{new_event.id}\n"
-                             f"{new_event.summary}\n"
-                             f"{new_event.start}\n"
-                             f"{new_event.conference_link}\n"
-                             f"{new_event.document_link}\n"
-                             f"{new_event.description}\n"
-                             f"{new_event.google_calendar_event_id}")
+        # Adding event into google calendar
 
-        # conference_link = \
-        #     f'<a href="{state_event[CONFERENCE]}">Conference link</a>'
-        #
-        # document_link = \
-        #     f'<a href="{state_event[CODE]}">Conference link</a>'
-        #
-        # public_description =
+        conference_link = \
+            f'<a href="{db_event.conference_link}">Conference link</a>'
+
+        document_link = \
+            f'<a href="{db_event.document_link}">Document link</a>'
+
+        public_description = f'{conference_link}\n{document_link}\n' \
+                             f'{db_event.description}'
+
+        gcal_event = EventGcalAPI.create(
+            event_id=db_event.google_calendar_event_id,
+            summary=db_event.summary,
+            start=db_event.start,
+            description=public_description)
+
+        await message.answer(f'{gcal_event.event_id}\n'
+                             f'{gcal_event.summary}\n'
+                             f'{gcal_event.start}\n'
+                             f'{gcal_event.description}\n'
+                             f'{gcal_event.location}')
 
     elif text.encode() == b'\xf0\x9f\x91\x8e No' \
             or text.strip().lower() in ('no', 'нет'):
