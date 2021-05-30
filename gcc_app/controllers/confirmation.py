@@ -80,3 +80,8 @@ async def result_confirmation(message: types.Message, state: FSMContext):
 
         await (await message.answer('.', reply_markup=ReplyKeyboardRemove())). \
             delete()
+
+        await state.reset_state(with_data=True)
+
+    else:
+        await message.answer('Используйте предлагаемую клавиатуру')
