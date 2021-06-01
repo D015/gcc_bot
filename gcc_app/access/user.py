@@ -19,12 +19,14 @@ class UserAccess(BaseAccess):
     __model: Optional[DeclarativeMeta] = UserModel
 
     def create(self) -> int:
-        new_user = UserModel(telegram_user_id=self.telegram_user_id,
-                             is_bot=self.is_bot,
-                             first_name=self.first_name,
-                             last_name=self.last_name,
-                             username=self.username,
-                             language_code=self.language_code)
+        new_user = UserModel(
+            telegram_user_id=self.telegram_user_id,
+            is_bot=self.is_bot,
+            first_name=self.first_name,
+            last_name=self.last_name,
+            username=self.username,
+            language_code=self.language_code,
+        )
         session.add(new_user)
         session.commit()
         return new_user.id
@@ -41,6 +43,9 @@ class UserAccess(BaseAccess):
         return user_id
 
     def query_by_telegram_user_id(self) -> UserModel:
-        user = session.query(UserModel).filter_by(
-            telegram_user_id=self.telegram_user_id).first()
+        user = (
+            session.query(UserModel)
+            .filter_by(telegram_user_id=self.telegram_user_id)
+            .first()
+        )
         return user
