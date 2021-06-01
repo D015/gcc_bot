@@ -10,7 +10,7 @@ DB_PORT = environ.get("DB_PORT", settings.db_port)
 DB_NAME = environ.get("DB_NAME", settings.db_name)
 
 SQLALCHEMY_DATABASE_URI = (
-    f"postgresql+psycopg2://" f"{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    f"postgresql+asyncpg://" f"{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
 
 

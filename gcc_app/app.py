@@ -1,11 +1,9 @@
-import redis
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage.redis import RedisStorage
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.types import BotCommand
-from sqlalchemy import create_engine
 
 # todo from aiopg.sa import create_engine
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -22,12 +20,18 @@ from gcc_app.config import (
     COMMAND_TEST,
 )
 
+
 from gcsa.google_calendar import GoogleCalendar
 
-engine = create_engine(SQLALCHEMY_DATABASE_URI, echo=True)
 DB = declarative_base()
-Session = sessionmaker(bind=engine)
-session = Session()
+
+
+async def created_async_session():
+    engine = create_async_engine(SQLALCHEMY_DATABASE_URI, echo=True)
+    async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
+    return async_session()
+
+session = None
 
 storage = RedisStorage(**REDIS_URI)
 
