@@ -8,7 +8,8 @@ from gcc_app.access.base import BaseAccess
 from gcc_app.app import session
 from gcc_app.constants import DEFAULT_SUMMARY
 from gcc_app.global_utils import create_uuid4_hex
-from gcc_app.models.event import EventModel
+from gcc_app.models import EventModel
+
 from gcc_app.utils import create_default_start
 
 
@@ -44,7 +45,7 @@ class EventAccess(BaseAccess):
                        end=self.end,
                        timezone=self.timezone,
                        conference_link=self.conference_link,
-                       document_link = self.document_link,
+                       document_link=self.document_link,
                        description=self.description,
                        location=self.location,
                        user_id=self.user_id)

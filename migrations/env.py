@@ -5,13 +5,13 @@ from sqlalchemy import pool
 
 from alembic import context
 
+from gcc_app.app import DB
 from gcc_app.config import SQLALCHEMY_DATABASE_URI
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
-from gcc_app.models import UserModel
-from gcc_app.models.base import BaseModel
-from gcc_app.models.event import EventModel
+from gcc_app.models import UserModel, EventModel
+
 
 config = context.config
 
@@ -27,7 +27,7 @@ fileConfig(config.config_file_name)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = [BaseModel.metadata]
+target_metadata = [DB.metadata]
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

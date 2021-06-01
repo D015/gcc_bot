@@ -9,8 +9,8 @@ from sqlalchemy import (Column,
 from gcc_app.app import DB
 
 
-class BaseModel(DB):
-    __tablename__ = 'base_model'
+class BaseModel:
+    # __tablename__ = 'base_model'
 
     id = Column(Integer, primary_key=True)
 
@@ -18,9 +18,9 @@ class BaseModel(DB):
     active = Column(Boolean, default=True)
     archived = Column(Boolean, default=False)
 
-    type = Column(String(50))
+    # type = Column(String(50))
 
-    __mapper_args__ = {
-        'polymorphic_identity': 'base_model',
-        'polymorphic_on': type
-    }
+    # __mapper_args__ = {
+    #     'polymorphic_identity': 'base_model',
+    #     'polymorphic_on': type
+    # }

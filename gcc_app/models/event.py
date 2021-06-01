@@ -5,13 +5,14 @@ from sqlalchemy import (Column,
                         ForeignKey)
 from sqlalchemy.orm import relationship, backref
 
+from gcc_app.app import DB
 from gcc_app.models.base import BaseModel
 
 
-class EventModel(BaseModel):
+class EventModel(DB, BaseModel):
     __tablename__ = 'event'
 
-    id = Column(Integer, ForeignKey('base_model.id'), primary_key=True)
+    # id = Column(Integer, ForeignKey('base_model.id'), primary_key=True)
     # todo move default=create_uuid4 into def __init__
     google_calendar_event_id = Column(String(1024), index=True, unique=True)
     summary = Column(String(56))
@@ -32,9 +33,12 @@ class EventModel(BaseModel):
         'UserModel', foreign_keys=[user_id], cascade='all, delete',
         backref=backref('events', lazy='dynamic'))
 
-    __mapper_args__ = {
-        'polymorphic_identity': 'event'
-    }
+    def __init__(self, *args, **kwargs):
+        super(EventModel, self).__init__(*args, **kwargs)
+
+    # __mapper_args__ = {
+    #     'polymorphic_identity': 'event'
+    # }
 
     def __repr__(self):
         return f'Event id {self.id} {self.summary} event_id {self.google_calendar_event_id}'
