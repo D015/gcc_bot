@@ -1,10 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import (Column,
-                        Boolean,
-                        DateTime,
-                        Integer,
-                        String)
+from sqlalchemy import Column, Boolean, DateTime, Integer, String
 
 from gcc_app.app import DB
 

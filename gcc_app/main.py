@@ -5,5 +5,5 @@ from gcc_app import controllers
 
 controllers = controllers
 # todo skip_updates=True ?
-if __name__ == '__main__':
+if __name__ == "__main__":
     executor.start_polling(dp, on_shutdown=shutdown, on_startup=startup)

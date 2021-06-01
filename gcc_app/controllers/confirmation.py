@@ -7,8 +7,7 @@ from aiogram.types import ReplyKeyboardRemove
 from gcc_app.access.event import EventAccess
 from gcc_app.access.user import UserAccess
 from gcc_app.app import dp
-from gcc_app.constants import DATE, TIME, HOUR, MINUTE, CONFERENCE, CODE, \
-    DESCRIPTION
+from gcc_app.constants import DATE, TIME, HOUR, MINUTE, CONFERENCE, CODE, DESCRIPTION
 from gcc_app.gcal_api import EventGcalAPI
 
 from gcc_app.utils import EventCreationStates
@@ -17,71 +16,84 @@ from gcc_app.utils import EventCreationStates
 @dp.message_handler(state=EventCreationStates.confirmation)
 async def result_confirmation(message: types.Message, state: FSMContext):
     text = message.text
-    if text.encode() == b'\xf0\x9f\x91\x8d Yes' \
-            or text.strip().lower() in ('yes', 'да'):
+    if text.encode() == b"\xf0\x9f\x91\x8d Yes" or text.strip().lower() in (
+        "yes",
+        "да",
+    ):
 
-        await (await message.answer('.', reply_markup=ReplyKeyboardRemove())). \
-            delete()
+        await (await message.answer(".", reply_markup=ReplyKeyboardRemove())).delete()
         state_event = await state.get_data()
         # Adding event into db
-        last_first_name = \
-            f'{message.from_user.last_name} {message.from_user.first_name}'
+        last_first_name = (
+            f"{message.from_user.last_name} {message.from_user.first_name}"
+        )
 
         date_time = datetime.fromisoformat(state_event[DATE])
-        date_time = date_time.replace(hour=int(state_event[TIME][HOUR]),
-                                      minute=int(state_event[TIME][MINUTE]))
+        date_time = date_time.replace(
+            hour=int(state_event[TIME][HOUR]), minute=int(state_event[TIME][MINUTE])
+        )
 
         print(date_time)
 
-        user_id = UserAccess(telegram_user_id=message.from_user.id). \
-            query_by_telegram_user_id().id
+        user_id = (
+            UserAccess(telegram_user_id=message.from_user.id)
+            .query_by_telegram_user_id()
+            .id
+        )
 
-        db_event = EventAccess(summary=last_first_name,
-                               start=date_time,
-                               conference_link=state_event[CONFERENCE],
-                               document_link=state_event[CODE],
-                               description=state_event[DESCRIPTION],
-                               user_id=user_id).create()
+        db_event = EventAccess(
+            summary=last_first_name,
+            start=date_time,
+            conference_link=state_event[CONFERENCE],
+            document_link=state_event[CODE],
+            description=state_event[DESCRIPTION],
+            user_id=user_id,
+        ).create()
         await state.reset_state(with_data=True)
 
-        await message.answer(f"{db_event.id}\n"
-                             f"{db_event.summary}\n"
-                             f"{db_event.start}\n"
-                             f"{db_event.conference_link}\n"
-                             f"{db_event.document_link}\n"
-                             f"{db_event.description}\n"
-                             f"{db_event.google_calendar_event_id}")
+        await message.answer(
+            f"{db_event.id}\n"
+            f"{db_event.summary}\n"
+            f"{db_event.start}\n"
+            f"{db_event.conference_link}\n"
+            f"{db_event.document_link}\n"
+            f"{db_event.description}\n"
+            f"{db_event.google_calendar_event_id}"
+        )
 
         # Adding event into google calendar
 
-        conference_link = \
-            f'<a href="{db_event.conference_link}">Conference link</a>'
+        conference_link = f'<a href="{db_event.conference_link}">Conference link</a>'
 
-        document_link = \
-            f'<a href="{db_event.document_link}">Document link</a>'
+        document_link = f'<a href="{db_event.document_link}">Document link</a>'
 
-        public_description = f'{conference_link}\n{document_link}\n' \
-                             f'{db_event.description}'
+        public_description = (
+            f"{conference_link}\n{document_link}\n" f"{db_event.description}"
+        )
 
         gcal_event = EventGcalAPI.create(
             event_id=db_event.google_calendar_event_id,
             summary=db_event.summary,
             start=db_event.start,
-            description=public_description)
+            description=public_description,
+        )
 
-        await message.answer(f'{gcal_event.event_id}\n'
-                             f'{gcal_event.summary}\n'
-                             f'{gcal_event.start}\n'
-                             f'{gcal_event.description}\n'
-                             f'{gcal_event.location}')
+        await message.answer(
+            f"{gcal_event.event_id}\n"
+            f"{gcal_event.summary}\n"
+            f"{gcal_event.start}\n"
+            f"{gcal_event.description}\n"
+            f"{gcal_event.location}"
+        )
 
-    elif text.encode() == b'\xf0\x9f\x91\x8e No' \
-            or text.strip().lower() in ('no', 'нет'):
+    elif text.encode() == b"\xf0\x9f\x91\x8e No" or text.strip().lower() in (
+        "no",
+        "нет",
+    ):
 
-        await (await message.answer('.', reply_markup=ReplyKeyboardRemove())). \
-            delete()
+        await (await message.answer(".", reply_markup=ReplyKeyboardRemove())).delete()
 
         await state.reset_state(with_data=True)
 
     else:
-        await message.answer('Используйте предлагаемую клавиатуру')
+        await message.answer("Используйте предлагаемую клавиатуру")

@@ -1,8 +1,4 @@
-from sqlalchemy import (Column,
-                        DateTime,
-                        String,
-                        Integer,
-                        ForeignKey)
+from sqlalchemy import Column, DateTime, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship, backref
 
 from gcc_app.app import DB
@@ -10,7 +6,7 @@ from gcc_app.models.base import BaseModel
 
 
 class EventModel(DB, BaseModel):
-    __tablename__ = 'event'
+    __tablename__ = "event"
 
     # id = Column(Integer, ForeignKey('base_model.id'), primary_key=True)
     # todo move default=create_uuid4 into def __init__
@@ -27,11 +23,14 @@ class EventModel(DB, BaseModel):
     document_link = Column(String(2000))
     description = Column(String(1024))
     location = Column(String(2000))
-    user_id = Column(Integer, ForeignKey('user.id'))
+    user_id = Column(Integer, ForeignKey("user.id"))
     # todo select the type of cascade deletion ?
     user = relationship(
-        'UserModel', foreign_keys=[user_id], cascade='all, delete',
-        backref=backref('events', lazy='dynamic'))
+        "UserModel",
+        foreign_keys=[user_id],
+        cascade="all, delete",
+        backref=backref("events", lazy="dynamic"),
+    )
 
     def __init__(self, *args, **kwargs):
         super(EventModel, self).__init__(*args, **kwargs)
@@ -41,6 +40,4 @@ class EventModel(DB, BaseModel):
     # }
 
     def __repr__(self):
-        return f'Event id {self.id} {self.summary} event_id {self.google_calendar_event_id}'
-
-
+        return f"Event id {self.id} {self.summary} event_id {self.google_calendar_event_id}"

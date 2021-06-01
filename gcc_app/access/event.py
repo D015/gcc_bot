@@ -38,22 +38,26 @@ class EventAccess(BaseAccess):
         if self.google_calendar_event_id is None:
             self.google_calendar_event_id = create_uuid4_hex()
 
-        new_event = \
-            EventModel(google_calendar_event_id=self.google_calendar_event_id,
-                       summary=self.summary,
-                       start=self.start,
-                       end=self.end,
-                       timezone=self.timezone,
-                       conference_link=self.conference_link,
-                       document_link=self.document_link,
-                       description=self.description,
-                       location=self.location,
-                       user_id=self.user_id)
+        new_event = EventModel(
+            google_calendar_event_id=self.google_calendar_event_id,
+            summary=self.summary,
+            start=self.start,
+            end=self.end,
+            timezone=self.timezone,
+            conference_link=self.conference_link,
+            document_link=self.document_link,
+            description=self.description,
+            location=self.location,
+            user_id=self.user_id,
+        )
         session.add(new_event)
         session.commit()
         return new_event
 
     def query_by_google_calendar_event_id(self) -> DeclarativeMeta:
-        event = session.query(EventModel).filter_by(
-            google_calendar_event_id=self.google_calendar_event_id).first()
+        event = (
+            session.query(EventModel)
+            .filter_by(google_calendar_event_id=self.google_calendar_event_id)
+            .first()
+        )
         return event

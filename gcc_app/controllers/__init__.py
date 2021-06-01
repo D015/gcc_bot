@@ -10,5 +10,3 @@ from gcc_app.controllers.description import process_event_description
 from gcc_app.controllers.confirmation import result_confirmation
 
 from gcc_app.controllers.echo import echo_message
-
-

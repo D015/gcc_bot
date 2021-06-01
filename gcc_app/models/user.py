@@ -1,15 +1,11 @@
-from sqlalchemy import (Column,
-                        Boolean,
-                        String,
-                        Integer,
-                        ForeignKey)
+from sqlalchemy import Column, Boolean, String, Integer, ForeignKey
 
 from gcc_app.app import DB
 from gcc_app.models.base import BaseModel
 
 
 class UserModel(DB, BaseModel):
-    __tablename__ = 'user'
+    __tablename__ = "user"
 
     # id = Column(Integer, ForeignKey('base_model.id'), primary_key=True)
 
@@ -28,5 +24,7 @@ class UserModel(DB, BaseModel):
     # }
 
     def __repr__(self):
-        return f'User id {self.id} {self.username} ' \
-               f'telegram_user_id {self.telegram_user_id}'
+        return (
+            f"User id {self.id} {self.username} "
+            f"telegram_user_id {self.telegram_user_id}"
+        )

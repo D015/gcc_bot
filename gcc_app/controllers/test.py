@@ -8,10 +8,11 @@ from gcc_app.models import UserModel
 from gcc_app.models.event import EventModel
 
 
-@dp.message_handler(commands=['test'])
+@dp.message_handler(commands=["test"])
 async def process_test_command(message: types.Message):
-    user_id = UserAccess(
-        telegram_user_id=message.from_user.id).query_by_telegram_user_id().id
+    user_id = (
+        UserAccess(telegram_user_id=message.from_user.id).query_by_telegram_user_id().id
+    )
     # user_new = UserModel(telegram_user_id=456)
     # session.add(user_new)
     # session.flush()
@@ -28,7 +29,7 @@ async def process_test_command(message: types.Message):
     # print(event_model_new.google_calendar_event_id)
     # print(type(event_model_new.google_calendar_event_id))
     # event_new = \
-        # EventGcalAPI(event_id=event_model_new.google_calendar_event_id).create()
+    # EventGcalAPI(event_id=event_model_new.google_calendar_event_id).create()
 
     # user = UserAccess(telegram_user_id=32111).query_by_telegram_user_id()
     # event = EventAccess(
@@ -50,9 +51,6 @@ async def process_test_command(message: types.Message):
     # event_remove_res = EventAccess(_obj=event).remove()
     # print(user_remove_res)
     # print(event_remove_res)
-
-
-
 
     # user = session.query(User).filter_by(chat_id=321).first()
     # print('--------------------')
