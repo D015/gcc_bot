@@ -1,7 +1,6 @@
 from aiogram import types
 
-from gcc_app.app import session, dp
-from gcc_app.models import UserModel
+from gcc_app.app import dp
 
 
 @dp.message_handler(commands=["help"])

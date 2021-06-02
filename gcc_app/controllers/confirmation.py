@@ -33,22 +33,18 @@ async def result_confirmation(message: types.Message, state: FSMContext):
             hour=int(state_event[TIME][HOUR]), minute=int(state_event[TIME][MINUTE])
         )
 
-        print(date_time)
-
-        user_id = (
-            UserAccess(telegram_user_id=message.from_user.id)
-            .query_by_telegram_user_id()
-            .id
+        user = await UserAccess.query_by_telegram_user_id(
+            telegram_user_id=message.from_user.id
         )
 
-        db_event = EventAccess(
+        db_event = await EventAccess.create(
             summary=last_first_name,
             start=date_time,
             conference_link=state_event[CONFERENCE],
             document_link=state_event[CODE],
             description=state_event[DESCRIPTION],
-            user_id=user_id,
-        ).create()
+            user_id=user.id,
+        )
         await state.reset_state(with_data=True)
 
         await message.answer(

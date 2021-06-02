@@ -8,7 +8,6 @@ from gcc_app.models import UserModel
 
 
 class UserAccess(BaseAccess):
-
     @staticmethod
     async def create(
         telegram_user_id: Optional[int] = None,

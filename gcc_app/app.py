@@ -32,8 +32,6 @@ async def created_async_session():
     return async_session()
 
 
-session = None
-
 storage = RedisStorage(**REDIS_URI)
 
 calendar = GoogleCalendar("juniors.py.code.review@gmail.com")
