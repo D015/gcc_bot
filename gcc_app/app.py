@@ -31,6 +31,7 @@ async def created_async_session():
     async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
     return async_session()
 
+
 session = None
 
 storage = RedisStorage(**REDIS_URI)

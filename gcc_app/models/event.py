@@ -32,12 +32,12 @@ class EventModel(DB, BaseModel):
         backref=backref("events", lazy="dynamic"),
     )
 
+    # __mapper_args__ = {'eager_defaults': True}
+
     def __init__(self, *args, **kwargs):
         super(EventModel, self).__init__(*args, **kwargs)
 
-    # __mapper_args__ = {
-    #     'polymorphic_identity': 'event'
-    # }
+    __mapper_args__ = {'eager_defaults': True}
 
     def __repr__(self):
         return f"Event id {self.id} {self.summary} event_id {self.google_calendar_event_id}"

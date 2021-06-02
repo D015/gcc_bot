@@ -7,8 +7,6 @@ from gcc_app.models.base import BaseModel
 class UserModel(DB, BaseModel):
     __tablename__ = "user"
 
-    # id = Column(Integer, ForeignKey('base_model.id'), primary_key=True)
-
     telegram_user_id = Column(Integer, index=True, unique=True)
     is_bot = Column(Boolean)
     first_name = Column(String(50))
@@ -16,12 +14,13 @@ class UserModel(DB, BaseModel):
     username = Column(String(50))
     language_code = Column(String(6))
 
+    # __mapper_args__ = {'eager_defaults': True}
+
     def __init__(self, *args, **kwargs):
         super(UserModel, self).__init__(*args, **kwargs)
 
-    # __mapper_args__ = {
-    #     'polymorphic_identity': 'user'
-    # }
+    __mapper_args__ = {'eager_defaults': True}
+
 
     def __repr__(self):
         return (
