@@ -19,8 +19,7 @@ class UserModel(DB, BaseModel):
     def __init__(self, *args, **kwargs):
         super(UserModel, self).__init__(*args, **kwargs)
 
-    __mapper_args__ = {'eager_defaults': True}
-
+    __mapper_args__ = {"eager_defaults": True}
 
     def __repr__(self):
         return (

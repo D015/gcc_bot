@@ -1,8 +1,6 @@
-from dataclasses import dataclass
 from typing import Optional
 
 from sqlalchemy.future import select
-from sqlalchemy.orm import DeclarativeMeta
 
 from gcc_app.access.base import BaseAccess
 from gcc_app.app import created_async_session
@@ -10,13 +8,6 @@ from gcc_app.models import UserModel
 
 
 class UserAccess(BaseAccess):
-    # telegram_user_id: Optional[int] = None
-    # is_bot: Optional[bool] = None
-    # first_name: Optional[str] = None
-    # last_name: Optional[str] = None
-    # username: Optional[str] = None
-    # language_code: Optional[str] = None
-    # __model: Optional[DeclarativeMeta] = UserModel
 
     @staticmethod
     async def create(
@@ -40,7 +31,6 @@ class UserAccess(BaseAccess):
                 )
                 session.add(new_user)
             # await session.commit()
-
         return new_user.id
 
     @classmethod
@@ -69,7 +59,7 @@ class UserAccess(BaseAccess):
                 first_name=first_name,
                 last_name=last_name,
                 username=username,
-                language_code=language_code
+                language_code=language_code,
             )
         return user_id
 
