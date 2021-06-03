@@ -25,7 +25,11 @@ class EventGcalAPI:
         # by default, the Google calendar itself creates value from "event_id"
         # in order to set its own value for "event_id", you need to use the "id"
         new_event = Event(
-            id=event_id, summary=summary, start=start, description=description
+            id=event_id,
+            summary=summary,
+            start=start,
+            description=description,
+            location=location,
         )
         calendar.add_event(new_event)
         event = cls.query_by_google_calendar_event_id(event_id=event_id)

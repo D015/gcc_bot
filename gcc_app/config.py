@@ -12,6 +12,9 @@ DB_NAME = environ.get("DB_NAME", settings.db_name)
 SQLALCHEMY_DATABASE_URI = (
     f"postgresql+asyncpg://" f"{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 )
+ALEMBIC_SQLALCHEMY_DATABASE_URI = (
+    f"postgresql+psycopg2://" f"{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+)
 
 
 REDIS_HOST = environ.get("REDIS_HOST", settings.redis_host)

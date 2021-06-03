@@ -4,7 +4,7 @@ from typing import Optional, Union
 from sqlalchemy.future import select
 
 from gcc_app.access.base import BaseAccess
-from gcc_app.app import created_async_session
+from gcc_app.app import create_async_session
 from gcc_app.constants import DEFAULT_SUMMARY
 from gcc_app.global_utils import create_uuid4_hex
 from gcc_app.models import EventModel
@@ -33,14 +33,14 @@ class EventAccess(BaseAccess):
 
         if type(start) is not datetime and type(start) is not date:
             start = create_default_start()
-        if google_calendar_event_id is None:
-            # TODO Use create_uuid4_hex in Access or in Model?
-            google_calendar_event_id = create_uuid4_hex()
+        # if google_calendar_event_id is None:
+        #     # TODO Use create_uuid4_hex in Access or in Model?
+        #     google_calendar_event_id = create_uuid4_hex()
 
-        async with await created_async_session() as session:
+        async with await create_async_session() as session:
             async with session.begin():
                 new_event = EventModel(
-                    google_calendar_event_id=google_calendar_event_id,
+                    # google_calendar_event_id=google_calendar_event_id,
                     summary=summary,
                     start=start,
                     end=end,
@@ -58,7 +58,7 @@ class EventAccess(BaseAccess):
     async def query_by_google_calendar_event_id(
         google_calendar_event_id: Optional[str] = None,
     ) -> EventModel:
-        async with await created_async_session() as session:
+        async with await create_async_session() as session:
             events = await session.execute(
                 select(EventModel).filter_by(
                     google_calendar_event_id=google_calendar_event_id

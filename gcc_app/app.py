@@ -26,7 +26,7 @@ from gcsa.google_calendar import GoogleCalendar
 DB = declarative_base()
 
 
-async def created_async_session():
+async def create_async_session():
     engine = create_async_engine(SQLALCHEMY_DATABASE_URI, echo=True)
     async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
     return async_session()

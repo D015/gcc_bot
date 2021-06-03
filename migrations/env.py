@@ -6,7 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 
 from gcc_app.app import DB
-from gcc_app.config import SQLALCHEMY_DATABASE_URI
+from gcc_app.config import ALEMBIC_SQLALCHEMY_DATABASE_URI
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -16,7 +16,9 @@ from gcc_app.models import UserModel, EventModel
 config = context.config
 
 section = config.config_ini_section
-config.set_section_option(section, "SQLALCHEMY_DATABASE_URI", SQLALCHEMY_DATABASE_URI)
+config.set_section_option(
+    section, "SQLALCHEMY_DATABASE_URI", ALEMBIC_SQLALCHEMY_DATABASE_URI
+)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

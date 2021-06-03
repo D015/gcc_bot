@@ -3,7 +3,7 @@ from typing import Optional
 from sqlalchemy.future import select
 
 from gcc_app.access.base import BaseAccess
-from gcc_app.app import created_async_session
+from gcc_app.app import create_async_session
 from gcc_app.models import UserModel
 
 
@@ -18,7 +18,7 @@ class UserAccess(BaseAccess):
         language_code: Optional[str] = None,
     ) -> int:
 
-        async with await created_async_session() as session:
+        async with await create_async_session() as session:
             async with session.begin():
                 new_user = UserModel(
                     telegram_user_id=telegram_user_id,
@@ -43,15 +43,7 @@ class UserAccess(BaseAccess):
         language_code: Optional[str] = None,
     ) -> int:
         user = await cls.query_by_telegram_user_id(telegram_user_id=telegram_user_id)
-        if user:
-            user_id = user.id
-            if not user.active:
-                async with await created_async_session() as session:
-                    # async with session.begin():
-                    user.active = True
-                    session.add(user)
-                    await session.commit()
-        else:
+        if not user:
             user_id = await cls.create(
                 telegram_user_id=telegram_user_id,
                 is_bot=is_bot,
@@ -60,13 +52,21 @@ class UserAccess(BaseAccess):
                 username=username,
                 language_code=language_code,
             )
+        else:
+            user_id = user.id
+            if not user.active:
+                async with await create_async_session() as session:
+                    async with session.begin():
+                        user.active = True
+                        session.add(user)
+
         return user_id
 
     @staticmethod
     async def query_by_telegram_user_id(
         telegram_user_id: Optional[int] = None,
     ) -> UserModel:
-        async with await created_async_session() as session:
+        async with await create_async_session() as session:
             users = await session.execute(
                 select(UserModel).filter_by(telegram_user_id=telegram_user_id)
             )

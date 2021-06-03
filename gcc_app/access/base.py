@@ -4,7 +4,7 @@ from typing import Optional, Union
 
 from sqlalchemy.orm import DeclarativeMeta
 
-from gcc_app.app import created_async_session
+from gcc_app.app import create_async_session
 from gcc_app.models import UserModel, EventModel
 from gcc_app.models.base import BaseModel
 
@@ -22,33 +22,33 @@ class BaseAccess:
     async def remove(_obj: Optional[DeclarativeMeta]) -> int:
         if _obj:
             _obj_id = _obj.id
-            async with await created_async_session() as session:
+            async with await create_async_session() as session:
                 session.delete(_obj)
                 session.commit()
             return _obj_id
         return None
 
     def query_by_id(self):
-        obj = created_async_session().query(self.__model).get(self.id)
+        obj = create_async_session().query(self.__model).get(self.id)
         return obj
 
     def activate(self):
         self._obj.active = True
-        created_async_session().commit()
+        create_async_session().commit()
 
         return True
 
     def deactivate(self):
         self._obj.active = False
-        created_async_session().commit()
+        create_async_session().commit()
         return False
 
     def archive(self):
         self._obj.archived = True
-        created_async_session().commit()
+        create_async_session().commit()
         return True
 
     def unarchive(self):
         self._obj.archived = False
-        created_async_session().commit()
+        create_async_session().commit()
         return False
