@@ -2,7 +2,6 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage
 from aiogram.contrib.middlewares.logging import LoggingMiddleware
 from aiogram.types import BotCommand
 
-# todo from aiopg.sa import create_engine
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -17,7 +16,7 @@ from gcc_app.config import (
     COMMAND_CREATE_EVENT,
     COMMAND_HELP,
     COMMAND_START,
-    COMMAND_TEST,
+    COMMAND_TEST, EMAIL_GOOGLE_CALENDAR,
 )
 
 
@@ -34,7 +33,7 @@ async def create_async_session():
 
 storage = RedisStorage(**REDIS_URI)
 
-calendar = GoogleCalendar("juniors.py.code.review@gmail.com")
+calendar = GoogleCalendar(EMAIL_GOOGLE_CALENDAR)
 
 bot = Bot(token=TOKEN_BOT)
 dp = Dispatcher(bot, storage=storage)

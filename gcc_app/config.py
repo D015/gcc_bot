@@ -31,6 +31,8 @@ REDIS_URI = {
 
 TOKEN_BOT = settings.token_bot
 
+EMAIL_GOOGLE_CALENDAR = settings.email_google_calendar
+
 COMMAND_CREATE_EVENT = ("/create_event", "Создать событие")
 COMMAND_HELP = ("/help", "Помощь")
 COMMAND_START = ("/start", "Старт")
