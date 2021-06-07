@@ -1,10 +1,10 @@
 from sqlalchemy import Column, Boolean, String, Integer, ForeignKey
 
-from gcc_app.app import DB
+from gcc_app.app import db
 from gcc_app.models.base import BaseModel
 
 
-class UserModel(BaseModel, DB):
+class UserModel(BaseModel, db):
     __tablename__ = "user"
 
     telegram_user_id = Column(Integer, index=True, unique=True)

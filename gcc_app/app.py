@@ -22,7 +22,10 @@ from gcc_app.config import (
 
 from gcsa.google_calendar import GoogleCalendar
 
-DB = declarative_base()
+from gcc_app.constants import BAD_WORDS_FILE
+from gcc_app.global_utils import ReaderTXT
+
+db = declarative_base()
 
 
 async def create_async_session():
@@ -38,6 +41,9 @@ calendar = GoogleCalendar(EMAIL_GOOGLE_CALENDAR)
 bot = Bot(token=TOKEN_BOT)
 dp = Dispatcher(bot, storage=storage)
 dp.middleware.setup(LoggingMiddleware())
+
+BAD_WORDS = ReaderTXT(BAD_WORDS_FILE).read_txt_into_frozenset()
+
 
 
 async def set_commands(bot: Bot):

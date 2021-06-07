@@ -39,4 +39,4 @@ EVENT_TITLE_LENGTH = 60
 APP_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 BAD_WORDS_FILE_ROOT = "data/bad_words.txt"
 BAD_WORDS_FILE = os.path.join(APP_ROOT, BAD_WORDS_FILE_ROOT)
-BAD_WORDS = ReaderTXT(BAD_WORDS_FILE).read_txt_into_frozenset()
+# BAD_WORDS = ReaderTXT(BAD_WORDS_FILE).read_txt_into_frozenset()

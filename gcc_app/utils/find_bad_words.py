@@ -1,10 +1,12 @@
-from typing import Optional
+import string
+from typing import Optional, FrozenSet
 
-from gcc_app.constants import BAD_WORDS
+from gcc_app.app import BAD_WORDS
 
 
-async def find_bad_words(text: str, bad_words: frozenset = BAD_WORDS) -> Optional[str]:
-    for word in bad_words:
-        if word in text.split(" "):
-            return word
-    return None
+async def find_bad_words(text: str, bad_words: frozenset = BAD_WORDS) -> FrozenSet:
+    # remove punctuation marks or ( text = re.sub(r'[^\w\s]','',text) )
+    text = text.translate(str.maketrans('', '', string.punctuation))
+    text = frozenset(text.strip().split(" "))
+    bad_words = text.intersection(BAD_WORDS)
+    return bad_words
