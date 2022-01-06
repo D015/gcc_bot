@@ -5,12 +5,12 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from gcc_app.app import db
-from gcc_app.config import ALEMBIC_SQLALCHEMY_DATABASE_URI
+from app import db
+from config import ALEMBIC_SQLALCHEMY_DATABASE_URI
 
-# this is the Alembic Config object, which provides
+# This is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
-from gcc_app.models import UserModel, EventModel
+from models import UserModel, EventModel
 
 
 config = context.config
