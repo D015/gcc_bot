@@ -1,8 +1,6 @@
 import os
 from typing import Union
 
-from gcc_app.global_utils import ReaderTXT
-
 
 DEFAULT_SUMMARY: str = "Untitled"
 

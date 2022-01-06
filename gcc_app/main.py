@@ -1,8 +1,6 @@
-import asyncio
-
 from aiogram.utils import executor
 
-from gcc_app.app import dp, shutdown, startup, create_async_session
+from gcc_app.app import dp, shutdown, startup
 from gcc_app import controllers
 
 controllers = controllers
