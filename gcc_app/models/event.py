@@ -2,9 +2,9 @@ from sqlalchemy import Column, DateTime, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.dialects.postgresql import UUID
 
-from gcc_app.app import db
-from gcc_app.global_utils import create_uuid4_hex
-from gcc_app.models.base import BaseModel
+from app import db
+from global_utils import create_uuid4_hex
+from .base import BaseModel
 
 
 class EventModel(BaseModel, db):

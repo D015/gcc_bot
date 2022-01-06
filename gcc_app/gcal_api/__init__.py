@@ -1,1 +1,1 @@
-from gcc_app.gcal_api.EventGcalAPI import EventGcalAPI
+from .event_gcal_api import EventGcalAPI

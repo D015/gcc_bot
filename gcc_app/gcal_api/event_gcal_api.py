@@ -4,9 +4,9 @@ from typing import Optional, Union
 from gcsa.event import Event
 from googleapiclient.errors import HttpError
 
-from gcc_app.app import calendar
-from gcc_app.constants import DEFAULT_SUMMARY
-from gcc_app.utils import create_default_start
+from app import calendar
+from constants import DEFAULT_SUMMARY
+from utils import create_default_start
 
 
 class EventGcalAPI:

@@ -1,12 +1,12 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from gcc_app.app import dp, bot
-from gcc_app.constants import YES_CONFIRMATION, NO_REFUSAL
-from gcc_app.keyboards import create_confirmation_board
-from gcc_app.utils import EventCreationStates
-from gcc_app.utils.creation_dialogue import save_and_continue
-from gcc_app.utils.find_bad_words import find_bad_words
+from app import dp, bot
+from constants import YES_CONFIRMATION, NO_REFUSAL
+from keyboards import create_confirmation_board
+from utils import EventCreationStates
+from utils import save_and_continue
+from utils import find_bad_words
 
 
 @dp.message_handler(state=EventCreationStates.description)

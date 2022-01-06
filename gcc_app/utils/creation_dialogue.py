@@ -7,7 +7,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup, StatesGroupMeta
 from aiogram.types import InlineKeyboardMarkup
 
-from gcc_app.constants import (
+from constants import (
     DATE,
     TIME,
     CONFERENCE,
@@ -17,8 +17,8 @@ from gcc_app.constants import (
     REPLY_MARKUP,
     CONFIRMATION,
 )
-from gcc_app.global_utils import DateTimeStr
-from gcc_app.keyboards import (
+from global_utils import DateTimeStr
+from keyboards import (
     create_calendar,
     create_time_board,
     create_confirmation_board,

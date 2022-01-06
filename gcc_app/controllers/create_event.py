@@ -1,9 +1,9 @@
 from aiogram import types
 
-from gcc_app.app import dp
-from gcc_app.constants import TEXT, REPLY_MARKUP
-from gcc_app.utils import EventCreationStates, continue_for_next
-from gcc_app.utils.creation_dialogue import requests_to_user
+from app import dp
+from constants import TEXT, REPLY_MARKUP
+from utils import EventCreationStates, continue_for_next
+from utils import requests_to_user
 
 
 @dp.message_handler(state="*", commands=["create_event"])

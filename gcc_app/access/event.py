@@ -3,13 +3,13 @@ from typing import Optional, Union
 
 from sqlalchemy.future import select
 
-from gcc_app.access.base import BaseAccess
-from gcc_app.app import create_async_session
-from gcc_app.constants import DEFAULT_SUMMARY
-from gcc_app.global_utils import create_uuid4_hex
-from gcc_app.models import EventModel
+from access.base import BaseAccess
+from app import create_async_session
+from constants import DEFAULT_SUMMARY
+from global_utils import create_uuid4_hex
+from models import EventModel
 
-from gcc_app.utils import create_default_start
+from utils import create_default_start
 
 
 class EventAccess(BaseAccess):

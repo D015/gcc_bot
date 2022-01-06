@@ -1,11 +1,11 @@
 from aiogram import types
 
-from gcc_app.access.event import EventAccess
-from gcc_app.access.user import UserAccess
-from gcc_app.app import dp
-from gcc_app.gcal_api.EventGcalAPI import EventGcalAPI
-from gcc_app.models import UserModel
-from gcc_app.models.event import EventModel
+from access import EventAccess
+from access import UserAccess
+from app import dp
+from gcal_api import EventGcalAPI
+from models import UserModel
+from models import EventModel
 
 
 @dp.message_handler(commands=["test"])

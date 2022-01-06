@@ -1,6 +1,6 @@
 from aiogram import types
 
-from gcc_app.app import dp
+from app import dp
 
 
 @dp.message_handler(commands=["help"])

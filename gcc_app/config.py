@@ -1,6 +1,6 @@
 from os import environ
 
-from gcc_app import settings
+import settings
 
 
 DB_USER = environ.get("DB_USER", settings.db_user)

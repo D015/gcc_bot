@@ -5,7 +5,7 @@ from aiogram.types import (
     KeyboardButton,
 )
 
-from gcc_app.constants import YES_CONFIRMATION, NO_REFUSAL
+from constants import YES_CONFIRMATION, NO_REFUSAL
 
 
 def create_confirmation_board() -> InlineKeyboardMarkup:

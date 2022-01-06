@@ -4,9 +4,9 @@ from typing import Optional, Union
 
 from sqlalchemy.orm import DeclarativeMeta
 
-from gcc_app.app import create_async_session
-from gcc_app.models import UserModel, EventModel
-from gcc_app.models.base import BaseModel
+from app import create_async_session
+from models import UserModel, EventModel
+from models.base import BaseModel
 
 
 class BaseAccess:

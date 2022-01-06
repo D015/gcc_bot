@@ -1,7 +1,7 @@
 from aiogram.utils import executor
 
-from gcc_app.app import dp, shutdown, startup
-from gcc_app import controllers
+from app import dp, shutdown, startup
+import controllers
 
 controllers = controllers
 # todo skip_updates=True ?

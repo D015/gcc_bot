@@ -1,7 +1,7 @@
 import string
 from typing import Optional, FrozenSet
 
-from gcc_app.app import BAD_WORDS
+from app import BAD_WORDS
 
 
 async def find_bad_words(text: str, bad_words: frozenset = BAD_WORDS) -> FrozenSet:

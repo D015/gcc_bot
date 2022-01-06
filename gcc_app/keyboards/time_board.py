@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from gcc_app.constants import (
+from constants import (
     TIME_BOARD_PART_INDEX,
     NUMBER_OF_HOURS_IN_BOARD,
     PART_DAY_INDICES,

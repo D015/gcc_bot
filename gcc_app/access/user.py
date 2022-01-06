@@ -2,9 +2,9 @@ from typing import Optional
 
 from sqlalchemy.future import select
 
-from gcc_app.access.base import BaseAccess
-from gcc_app.app import create_async_session
-from gcc_app.models import UserModel
+from .base import BaseAccess
+from app import create_async_session
+from models import UserModel
 
 
 class UserAccess(BaseAccess):

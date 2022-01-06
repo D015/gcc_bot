@@ -4,13 +4,13 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 
-from gcc_app.access.event import EventAccess
-from gcc_app.access.user import UserAccess
-from gcc_app.app import dp
-from gcc_app.constants import DATE, TIME, HOUR, MINUTE, CONFERENCE, CODE, DESCRIPTION
-from gcc_app.gcal_api import EventGcalAPI
+from access import EventAccess
+from access import UserAccess
+from app import dp
+from constants import DATE, TIME, HOUR, MINUTE, CONFERENCE, CODE, DESCRIPTION
+from gcal_api import EventGcalAPI
 
-from gcc_app.utils import EventCreationStates
+from utils import EventCreationStates
 
 
 @dp.message_handler(state=EventCreationStates.confirmation)

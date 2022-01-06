@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 from aiogram import Bot
 from aiogram.dispatcher import Dispatcher
 
-from gcc_app.config import (
+from config import (
     SQLALCHEMY_DATABASE_URI,
     TOKEN_BOT,
     REDIS_URI,
@@ -22,8 +22,8 @@ from gcc_app.config import (
 
 from gcsa.google_calendar import GoogleCalendar
 
-from gcc_app.constants import BAD_WORDS_FILE
-from gcc_app.global_utils import ReaderTXT
+from constants import BAD_WORDS_FILE
+from global_utils import ReaderTXT
 
 db = declarative_base()
 

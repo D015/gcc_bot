@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Union
 
-from gcc_app.constants import DEFAULT_DELTA_START_AND_NOW
+from constants import DEFAULT_DELTA_START_AND_NOW
 
 
 def create_default_start(

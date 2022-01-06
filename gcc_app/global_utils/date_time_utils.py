@@ -2,7 +2,7 @@ import datetime
 import re
 from typing import Union
 
-# from gcc_app.constants import MINUTE, HOUR
+# from constants import MINUTE, HOUR
 
 
 def get_time_from_string(text: str) -> Union[dict, float]:

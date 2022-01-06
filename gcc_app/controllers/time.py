@@ -3,12 +3,12 @@ from typing import Union
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from gcc_app.app import dp, bot
-from gcc_app.constants import NAVIGATION, PART_DAY_INDICES, TIME_TEXT, HOUR, MINUTE
-from gcc_app.global_utils import get_time_from_string, convert_str_to_int
-from gcc_app.keyboards import create_time_board
-from gcc_app.utils import EventCreationStates
-from gcc_app.utils.creation_dialogue import save_and_continue
+from app import dp, bot
+from constants import NAVIGATION, PART_DAY_INDICES, TIME_TEXT, HOUR, MINUTE
+from global_utils import get_time_from_string, convert_str_to_int
+from keyboards import create_time_board
+from utils import EventCreationStates
+from utils import save_and_continue
 
 
 @dp.callback_query_handler(lambda c: c.data, state=EventCreationStates.time)

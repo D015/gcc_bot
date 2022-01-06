@@ -1,9 +1,9 @@
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from gcc_app.app import dp
-from gcc_app.utils import EventCreationStates
-from gcc_app.utils.creation_dialogue import save_and_continue
+from app import dp
+from utils import EventCreationStates
+from utils import save_and_continue
 
 
 @dp.message_handler(state=EventCreationStates.conference)

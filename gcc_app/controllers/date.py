@@ -1,10 +1,10 @@
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
 
-from gcc_app.app import dp, bot
-from gcc_app.utils import EventCreationStates
-from gcc_app.keyboards import calendar_callback, process_calendar_selection
-from gcc_app.utils.creation_dialogue import save_and_continue
+from app import dp, bot
+from utils import EventCreationStates
+from keyboards import calendar_callback, process_calendar_selection
+from utils import save_and_continue
 
 
 @dp.callback_query_handler(calendar_callback.filter(), state=EventCreationStates.date)

@@ -1,6 +1,6 @@
 from aiogram import types
 
-from gcc_app.app import bot, dp
+from app import bot, dp
 
 
 @dp.message_handler()

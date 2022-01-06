@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Boolean, String, Integer
 
-from gcc_app.app import db
-from gcc_app.models.base import BaseModel
+from app import db
+from .base import BaseModel
 
 
 class UserModel(BaseModel, db):
