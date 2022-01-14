@@ -16,7 +16,8 @@ from config import (
     COMMAND_CREATE_EVENT,
     COMMAND_HELP,
     COMMAND_START,
-    COMMAND_TEST, EMAIL_GOOGLE_CALENDAR,
+    COMMAND_TEST,
+    EMAIL_GOOGLE_CALENDAR,
 )
 
 
@@ -30,7 +31,9 @@ db = declarative_base()
 
 async def create_async_session():
     engine = create_async_engine(SQLALCHEMY_DATABASE_URI, echo=True)
-    async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
+    async_session = sessionmaker(
+        engine, expire_on_commit=False, class_=AsyncSession
+    )
     return async_session()
 
 
@@ -45,11 +48,11 @@ dp.middleware.setup(LoggingMiddleware())
 BAD_WORDS = ReaderTXT(BAD_WORDS_FILE).read_txt_into_frozenset()
 
 
-
 async def set_commands(bot: Bot):
     commands = [
         BotCommand(
-            command=COMMAND_CREATE_EVENT[0], description=COMMAND_CREATE_EVENT[1]
+            command=COMMAND_CREATE_EVENT[0],
+            description=COMMAND_CREATE_EVENT[1],
         ),
         BotCommand(command=COMMAND_HELP[0], description=COMMAND_HELP[1]),
         BotCommand(command=COMMAND_START[0], description=COMMAND_START[1]),

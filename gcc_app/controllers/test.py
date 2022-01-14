@@ -11,7 +11,9 @@ from models import EventModel
 @dp.message_handler(commands=["test"])
 async def process_test_command(message: types.Message):
     user_id = (
-        UserAccess(telegram_user_id=message.from_user.id).query_by_telegram_user_id().id
+        UserAccess(telegram_user_id=message.from_user.id)
+        .query_by_telegram_user_id()
+        .id
     )
     # user_new = UserModel(telegram_user_id=456)
     # session.add(user_new)

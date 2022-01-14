@@ -42,7 +42,9 @@ class UserAccess(BaseAccess):
         username: Optional[str] = None,
         language_code: Optional[str] = None,
     ) -> int:
-        user = await cls.query_by_telegram_user_id(telegram_user_id=telegram_user_id)
+        user = await cls.query_by_telegram_user_id(
+            telegram_user_id=telegram_user_id
+        )
         if not user:
             user_id = await cls.create(
                 telegram_user_id=telegram_user_id,

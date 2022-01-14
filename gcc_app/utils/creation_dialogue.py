@@ -4,7 +4,11 @@ from typing import Optional, Union
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 
-from aiogram.dispatcher.filters.state import State, StatesGroup, StatesGroupMeta
+from aiogram.dispatcher.filters.state import (
+    State,
+    StatesGroup,
+    StatesGroupMeta,
+)
 from aiogram.types import InlineKeyboardMarkup
 
 from constants import (
@@ -41,7 +45,9 @@ async def go_to_next(state_class: Union[StatesGroupMeta, StatesGroup]) -> str:
     return next_state_name
 
 
-async def save_state_data(state: FSMContext, data: Union[str, int, dict, datetime]):
+async def save_state_data(
+    state: FSMContext, data: Union[str, int, dict, datetime]
+):
     data_key = (await state.get_state()).split(":")[1]
     data = data.isoformat() if type(data) == datetime else data
     await state.update_data({data_key: data})

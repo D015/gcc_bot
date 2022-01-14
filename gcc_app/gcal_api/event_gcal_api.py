@@ -36,7 +36,9 @@ class EventGcalAPI:
         return event
 
     @staticmethod
-    def query_by_google_calendar_event_id(event_id) -> Union[Event, bool, None]:
+    def query_by_google_calendar_event_id(
+        event_id,
+    ) -> Union[Event, bool, None]:
         try:
             event = calendar.get_event(event_id)
         except HttpError:

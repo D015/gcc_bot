@@ -12,7 +12,9 @@ from utils import save_and_continue
 
 
 @dp.callback_query_handler(lambda c: c.data, state=EventCreationStates.time)
-async def callback_time(callback_query: types.CallbackQuery, state: FSMContext):
+async def callback_time(
+    callback_query: types.CallbackQuery, state: FSMContext
+):
     message = callback_query.message
     data = callback_query.data
     event_time: Union[dict, float] = get_time_from_string(data)
@@ -29,7 +31,10 @@ async def callback_time(callback_query: types.CallbackQuery, state: FSMContext):
     elif data.startswith(NAVIGATION):
         other_part_index = data.split("_")[1]
         other_part_index = convert_str_to_int(other_part_index)
-        if other_part_index is not None and other_part_index in PART_DAY_INDICES:
+        if (
+            other_part_index is not None
+            and other_part_index in PART_DAY_INDICES
+        ):
             await message.edit_reply_markup(
                 reply_markup=create_time_board(other_part_index)
             )
@@ -44,11 +49,20 @@ async def callback_time(callback_query: types.CallbackQuery, state: FSMContext):
 
 @dp.message_handler(state=EventCreationStates.time)
 async def result_time(message: types.Message, state: FSMContext):
-    event_time: Union[dict, float] = get_time_from_string(message.text)
+    event_time = get_time_from_string(message.text)
     if event_time:
-        await message.answer(f"Введено: {event_time[HOUR]}:{event_time[MINUTE]}")
-        await save_and_continue(message=message, state=state, data=event_time)
+        await message.answer(
+            f"Введено: {event_time[HOUR]}:{event_time[MINUTE]}"
+        )
+        await save_and_continue(
+            message=message,
+            state=state,
+            data=event_time,
+            state_class=EventCreationStates,
+        )
     else:
         await message.answer(
-            f"Некорректный ввод!\n" f"Введите время в формате:\n" f"цифры пробел цифры"
+            f"Некорректный ввод!\n"
+            f"Введите время в формате:\n"
+            f"цифры пробел цифры"
         )

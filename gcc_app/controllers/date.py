@@ -7,7 +7,9 @@ from keyboards import calendar_callback, process_calendar_selection
 from utils import save_and_continue
 
 
-@dp.callback_query_handler(calendar_callback.filter(), state=EventCreationStates.date)
+@dp.callback_query_handler(
+    calendar_callback.filter(), state=EventCreationStates.date
+)
 async def result_calendar(
     callback_query: CallbackQuery, callback_data: dict, state: FSMContext
 ):

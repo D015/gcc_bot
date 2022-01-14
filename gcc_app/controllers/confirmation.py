@@ -21,7 +21,9 @@ async def result_confirmation(message: types.Message, state: FSMContext):
         "да",
     ):
 
-        await (await message.answer(".", reply_markup=ReplyKeyboardRemove())).delete()
+        await (
+            await message.answer(".", reply_markup=ReplyKeyboardRemove())
+        ).delete()
         state_event = await state.get_data()
         # Adding event into db
         last_first_name = (
@@ -30,7 +32,8 @@ async def result_confirmation(message: types.Message, state: FSMContext):
 
         date_time = datetime.fromisoformat(state_event[DATE])
         date_time = date_time.replace(
-            hour=int(state_event[TIME][HOUR]), minute=int(state_event[TIME][MINUTE])
+            hour=int(state_event[TIME][HOUR]),
+            minute=int(state_event[TIME][MINUTE]),
         )
 
         user = await UserAccess.query_by_telegram_user_id(
@@ -59,7 +62,9 @@ async def result_confirmation(message: types.Message, state: FSMContext):
 
         # Adding event into google calendar
 
-        conference_link = f'<a href="{db_event.conference_link}">Conference link</a>'
+        conference_link = (
+            f'<a href="{db_event.conference_link}">Conference link</a>'
+        )
 
         document_link = f'<a href="{db_event.document_link}">Document link</a>'
 
@@ -87,7 +92,9 @@ async def result_confirmation(message: types.Message, state: FSMContext):
         "нет",
     ):
 
-        await (await message.answer(".", reply_markup=ReplyKeyboardRemove())).delete()
+        await (
+            await message.answer(".", reply_markup=ReplyKeyboardRemove())
+        ).delete()
 
         await state.reset_state(with_data=True)
 

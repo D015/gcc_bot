@@ -25,8 +25,12 @@ async def process_event_description(message: types.Message, state: FSMContext):
         )
 
 
-@dp.callback_query_handler(lambda c: c.data, state=EventCreationStates.description)
-async def process_confirmed_intent_description(callback_query: types.CallbackQuery):
+@dp.callback_query_handler(
+    lambda c: c.data, state=EventCreationStates.description
+)
+async def process_confirmed_intent_description(
+    callback_query: types.CallbackQuery,
+):
     await bot.answer_callback_query(callback_query.id)
     await callback_query.message.delete_reply_markup()
     data = callback_query.data
@@ -49,7 +53,8 @@ async def process_confirmed_intent_description(callback_query: types.CallbackQue
         await state.set_state(EventCreationStates.all()[6])
         await bot.send_message(
             callback_query.from_user.id,
-            text="Использован нестандартный ответ.\n" 'Он трактуется как "Отказ"',
+            text="Использован нестандартный ответ.\n"
+            'Он трактуется как "Отказ"',
         )
         await bot.send_message(
             callback_query.from_user.id,

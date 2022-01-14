@@ -23,7 +23,8 @@ def create_calendar(year=datetime.now().year, month=datetime.now().month):
     inline_kb.row()
     inline_kb.insert(
         InlineKeyboardButton(
-            "<", callback_data=calendar_callback.new("PREV-YEAR", year, month, 1)
+            "<",
+            callback_data=calendar_callback.new("PREV-YEAR", year, month, 1),
         )
     )
     inline_kb.insert(
@@ -31,13 +32,16 @@ def create_calendar(year=datetime.now().year, month=datetime.now().month):
     )
     inline_kb.insert(
         InlineKeyboardButton(
-            ">", callback_data=calendar_callback.new("NEXT-YEAR", year, month, 1)
+            ">",
+            callback_data=calendar_callback.new("NEXT-YEAR", year, month, 1),
         )
     )
     # Second row - Week Days
     inline_kb.row()
     for day in ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]:
-        inline_kb.insert(InlineKeyboardButton(day, callback_data=ignore_callback))
+        inline_kb.insert(
+            InlineKeyboardButton(day, callback_data=ignore_callback)
+        )
 
     # Calendar rows - Days of month
     month_calendar = calendar.monthcalendar(year, month)
@@ -52,7 +56,9 @@ def create_calendar(year=datetime.now().year, month=datetime.now().month):
                 inline_kb.insert(
                     InlineKeyboardButton(
                         str(day),
-                        callback_data=calendar_callback.new("DAY", year, month, day),
+                        callback_data=calendar_callback.new(
+                            "DAY", year, month, day
+                        ),
                     )
                 )
 
@@ -60,7 +66,10 @@ def create_calendar(year=datetime.now().year, month=datetime.now().month):
     inline_kb.row()
     inline_kb.insert(
         InlineKeyboardButton(
-            "<", callback_data=calendar_callback.new("PREV-MONTH", year, month, day)
+            "<",
+            callback_data=calendar_callback.new(
+                "PREV-MONTH", year, month, day
+            ),
         )
     )
 
@@ -71,7 +80,10 @@ def create_calendar(year=datetime.now().year, month=datetime.now().month):
     )
     inline_kb.insert(
         InlineKeyboardButton(
-            ">", callback_data=calendar_callback.new("NEXT-MONTH", year, month, day)
+            ">",
+            callback_data=calendar_callback.new(
+                "NEXT-MONTH", year, month, day
+            ),
         )
     )
 
